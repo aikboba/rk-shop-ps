@@ -1,0 +1,35 @@
+<?php
+
+global $_MODULE;
+$_MODULE = array();
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_e740f3fa42937224847169cd3f9c2978'] = ' Cloudpayments';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_c58e81564851e9f12e92e7d399d786f9'] = 'Оплата товаров и услуг с помощью сервиса оплаты  Cloudpayments';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_876f23178c29dc2552c0b48bf23cd9bd'] = 'Вы уверены в том, что хотите удалить модуль?';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_05fbaa9cb478d838df9615358bf4a42c'] = 'Пожалуйста, выполните настройку модуля';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_62047d801b1b0f6f65daaeeb04f830ce'] = 'Public ID';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_3d2e43852565e2d3d41afc07ba46d401'] = 'Пароль';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_f447ac856e7e72435904956e3b15f433'] = 'Регион';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_abe147dff3e341ee9378b307eed833f0'] = 'Тип оплаты';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_9ede9c5a69c7fcaa38cbd8328a19bb95'] = 'Онлайн-касса';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_c7b898fc72d950a09c7832b87555a518'] = 'Система налогообложения';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_c888438d14855d7d96a2724ee9c306bd'] = 'Настройки сохранены';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_866b9c625aa9d7e962c1cd25622af2aa'] = 'Поле %s не должно быть пустым';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_3b27d895aef899241879ec63fe5f5ae6'] = 'Поле %s должно быть числом';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_f4f70727dc34561dfde1a3c529b6205c'] = 'Настройки';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_37e31370e4ab230ff6fba12cc6390aff'] = 'Пароль для API';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_5feb168ca8fb495dcc89b1208cdeb919'] = 'Россия';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_7c1a943bf29d2c753fb935e99428482c'] = 'Казахстан';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_f20d26bfed8376985e66ade19e580edf'] = 'одностадийный';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_66cd6fffc49e086508eeea8eaad999c0'] = 'двустадийный';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_fd2678e25a02f7fc269bd66d761f51e9'] = 'Общая система налогообложения';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_2d73cbebe17979d20e7099a594ba7811'] = 'Упрощенная система налогообложения (Доход)';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_ed7cc00c1554e1e4f771c3e91d73435d'] = 'Упрощенная система налогообложения (Доход минус Расход)';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_876366b312a2edeacb62f477881b9427'] = 'Единый налог на вмененный доход';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_5d0f24c24dd62541d0802ea80a2707c5'] = 'Единый сельскохозяйственный налог';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_7d77833de8843d2236ba71cacfd1adad'] = 'Патентная система налогообложения';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_c9cc8cce247e49bae79f15173ce97354'] = 'Сохранить';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_630f6dc397fe74e52d5189e2c80f282b'] = 'Вернуться';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_ddaec38afe1d07536eacbefa29ff6776'] = 'Ваши callback\'и:';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_69aa4e0e17702b3c6b12c03da091a204'] = 'Оплата заказа в магазине \"';
+$_MODULE['<{cloudpayments}prestashop>cloudpayments_065ab3a28ca4f16f55f103adc7d0226f'] = 'Доставка';
+$_MODULE['<{cloudpayments}prestashop>payment_afc42825067246018c816d574494194d'] = 'Оплата через CloudPayments';
