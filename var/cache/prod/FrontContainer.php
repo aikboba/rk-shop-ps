@@ -292,7 +292,7 @@ class FrontContainer extends Container
      */
     protected function getDoctrine_Dbal_DefaultConnectionService()
     {
-        return $this->services['doctrine.dbal.default_connection'] = ${($_ = isset($this->services['doctrine.dbal.connection_factory']) ? $this->services['doctrine.dbal.connection_factory'] : ($this->services['doctrine.dbal.connection_factory'] = new \Doctrine\Bundle\DoctrineBundle\ConnectionFactory([]))) && false ?: '_'}->createConnection(['driver' => 'pdo_mysql', 'host' => '127.0.0.1', 'port' => '', 'dbname' => 'rk_shop', 'user' => 'rk_shop_u', 'password' => 'cnuTq+09syzWG', 'charset' => 'UTF8', 'driverOptions' => [1002 => 'SET sql_mode=(SELECT REPLACE(@@sql_mode,\'ONLY_FULL_GROUP_BY\',\'\'))'], 'serverVersion' => 5.0999999999999996, 'defaultTableOptions' => []], new \Doctrine\DBAL\Configuration(), new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this), ['enum' => 'string']);
+        return $this->services['doctrine.dbal.default_connection'] = ${($_ = isset($this->services['doctrine.dbal.connection_factory']) ? $this->services['doctrine.dbal.connection_factory'] : ($this->services['doctrine.dbal.connection_factory'] = new \Doctrine\Bundle\DoctrineBundle\ConnectionFactory([]))) && false ?: '_'}->createConnection(['driver' => 'pdo_mysql', 'host' => '127.0.0.1', 'port' => '', 'dbname' => 'rk_shop', 'user' => 'root', 'password' => '', 'charset' => 'UTF8', 'driverOptions' => [1002 => 'SET sql_mode=(SELECT REPLACE(@@sql_mode,\'ONLY_FULL_GROUP_BY\',\'\'))'], 'serverVersion' => 5.1, 'defaultTableOptions' => []], new \Doctrine\DBAL\Configuration(), new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this), ['enum' => 'string']);
     }
 
     /**
@@ -308,7 +308,7 @@ class FrontContainer extends Container
         $a->setQueryCacheImpl(${($_ = isset($this->services['doctrine_cache.providers.doctrine.orm.default_query_cache']) ? $this->services['doctrine_cache.providers.doctrine.orm.default_query_cache'] : $this->getDoctrineCache_Providers_Doctrine_Orm_DefaultQueryCacheService()) && false ?: '_'});
         $a->setResultCacheImpl(${($_ = isset($this->services['doctrine_cache.providers.doctrine.orm.default_result_cache']) ? $this->services['doctrine_cache.providers.doctrine.orm.default_result_cache'] : $this->getDoctrineCache_Providers_Doctrine_Orm_DefaultResultCacheService()) && false ?: '_'});
         $a->setMetadataDriverImpl(new \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain());
-        $a->setProxyDir('/var/www/rimmakaramova-shop/data/var/cache/prod//doctrine/orm/Proxies');
+        $a->setProxyDir('C:\\OSPanel\\domains\\localhost/var/cache/prod//doctrine/orm/Proxies');
         $a->setProxyNamespace('Proxies');
         $a->setAutoGenerateProxyClasses(false);
         $a->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
@@ -335,7 +335,7 @@ class FrontContainer extends Container
     {
         $this->services['doctrine_cache.providers.doctrine.orm.default_metadata_cache'] = $instance = new \Doctrine\Common\Cache\ArrayCache();
 
-        $instance->setNamespace('sf_orm_default_86bcb3afeeabb90150d74ac7844776aff4ca48850fe078a4e0782cc487748514');
+        $instance->setNamespace('sf_orm_default_02601364673557ce7d10c8fbf0a2526afafee5be4c39962ad60d8c87a834ce10');
 
         return $instance;
     }
@@ -349,7 +349,7 @@ class FrontContainer extends Container
     {
         $this->services['doctrine_cache.providers.doctrine.orm.default_query_cache'] = $instance = new \Doctrine\Common\Cache\ArrayCache();
 
-        $instance->setNamespace('sf_orm_default_86bcb3afeeabb90150d74ac7844776aff4ca48850fe078a4e0782cc487748514');
+        $instance->setNamespace('sf_orm_default_02601364673557ce7d10c8fbf0a2526afafee5be4c39962ad60d8c87a834ce10');
 
         return $instance;
     }
@@ -363,7 +363,7 @@ class FrontContainer extends Container
     {
         $this->services['doctrine_cache.providers.doctrine.orm.default_result_cache'] = $instance = new \Doctrine\Common\Cache\ArrayCache();
 
-        $instance->setNamespace('sf_orm_default_86bcb3afeeabb90150d74ac7844776aff4ca48850fe078a4e0782cc487748514');
+        $instance->setNamespace('sf_orm_default_02601364673557ce7d10c8fbf0a2526afafee5be4c39962ad60d8c87a834ce10');
 
         return $instance;
     }
@@ -435,7 +435,7 @@ class FrontContainer extends Container
      */
     protected function getPrestashop_Core_Localization_Cldr_Cache_AdapterService()
     {
-        return $this->services['prestashop.core.localization.cldr.cache.adapter'] = new \Symfony\Component\Cache\Adapter\FilesystemAdapter('CLDR', 0, '/var/www/rimmakaramova-shop/data/var/cache/prod//localization');
+        return $this->services['prestashop.core.localization.cldr.cache.adapter'] = new \Symfony\Component\Cache\Adapter\FilesystemAdapter('CLDR', 0, 'C:\\OSPanel\\domains\\localhost/var/cache/prod\\/localization');
     }
 
     /**
@@ -445,7 +445,7 @@ class FrontContainer extends Container
      */
     protected function getPrestashop_Core_Localization_Cldr_Datalayer_LocaleCacheService()
     {
-        $this->services['prestashop.core.localization.cldr.datalayer.locale_cache'] = $instance = new \PrestaShop\PrestaShop\Core\Localization\CLDR\DataLayer\LocaleCache(${($_ = isset($this->services['prestashop.core.localization.cldr.cache.adapter']) ? $this->services['prestashop.core.localization.cldr.cache.adapter'] : ($this->services['prestashop.core.localization.cldr.cache.adapter'] = new \Symfony\Component\Cache\Adapter\FilesystemAdapter('CLDR', 0, '/var/www/rimmakaramova-shop/data/var/cache/prod//localization'))) && false ?: '_'});
+        $this->services['prestashop.core.localization.cldr.datalayer.locale_cache'] = $instance = new \PrestaShop\PrestaShop\Core\Localization\CLDR\DataLayer\LocaleCache(${($_ = isset($this->services['prestashop.core.localization.cldr.cache.adapter']) ? $this->services['prestashop.core.localization.cldr.cache.adapter'] : ($this->services['prestashop.core.localization.cldr.cache.adapter'] = new \Symfony\Component\Cache\Adapter\FilesystemAdapter('CLDR', 0, 'C:\\OSPanel\\domains\\localhost/var/cache/prod\\/localization'))) && false ?: '_'});
 
         $instance->setLowerLayer(${($_ = isset($this->services['prestashop.core.localization.cldr.datalayer.locale_reference']) ? $this->services['prestashop.core.localization.cldr.datalayer.locale_reference'] : $this->getPrestashop_Core_Localization_Cldr_Datalayer_LocaleReferenceService()) && false ?: '_'});
 
@@ -1115,31 +1115,32 @@ class FrontContainer extends Container
             'database_host' => '127.0.0.1',
             'database_port' => '',
             'database_name' => 'rk_shop',
-            'database_user' => 'rk_shop_u',
-            'database_password' => 'cnuTq+09syzWG',
+            'database_user' => 'root',
+            'database_password' => '',
             'database_prefix' => 'rks_',
             'database_engine' => 'InnoDB',
             'mailer_transport' => 'smtp',
             'mailer_host' => '127.0.0.1',
             'mailer_user' => NULL,
             'mailer_password' => NULL,
-            'secret' => 'Oupge96M9kIu8EL287kJyH2WgWPY3qOhXgD37U6dy2w1akwcY0r0DhpC',
+            'secret' => 'LsRELHNAuMFCRGIOqojp62CGTxIfGgHHNH8dbMB3t2qfnHtDYaVuYIXV',
             'ps_caching' => 'CacheMemcache',
             'ps_cache_enable' => false,
-            'ps_creation_date' => '2019-09-26',
+            'ps_creation_date' => '2019-12-22',
             'locale' => 'ru-RU',
-            'cookie_key' => 'ea0AXNOmMWEzr2hzVetdGebD8H1I68H0CgiIIG8B3nPEnhO5Gw9e0zGR',
-            'cookie_iv' => '11QHDYeT',
-            'new_cookie_key' => 'def00000799236eee4dbb8ad416a9397cb81132ff5fd86faf60e370010d354f52bf0364f09dab50210420921bc23bc636c4ad5d81a1d92e319188aa564f6b89b641c31bc',
+            'use_debug_toolbar' => true,
+            'cookie_key' => 'A8zW4SF6i09USrT6FEKEKb1XUw3dFahG2U6QW2x0XgcE9fuAAAMiFIFG',
+            'cookie_iv' => 'rrmCqdNd',
+            'new_cookie_key' => 'def000000ea648c49026d5b8bf8904c29657ea396e788f304661a072ddcba4a34d85162092752a1acae5fba408fde8b98fce014ed47d1673bbb189f3e85252c7e76c7b18',
             'cache.driver' => 'array',
             'kernel.bundles' => [
 
             ],
-            'kernel.root_dir' => '/var/www/rimmakaramova-shop/data/app/',
+            'kernel.root_dir' => 'C:\\OSPanel\\domains\\localhost/app/',
             'kernel.name' => 'app',
             'kernel.debug' => false,
             'kernel.environment' => 'prod',
-            'kernel.cache_dir' => '/var/www/rimmakaramova-shop/data/var/cache/prod/',
+            'kernel.cache_dir' => 'C:\\OSPanel\\domains\\localhost/var/cache/prod/',
             'kernel.active_modules' => [
                 0 => 'contactform',
                 1 => 'dashactivity',
@@ -1214,8 +1215,14 @@ class FrontContainer extends Container
                 70 => 'ps_bestsellers',
                 71 => 'roy_brands',
                 72 => 'cloudpayments',
+                73 => 'mcsync',
+                74 => 'roy_customcategory1',
+                75 => 'cdek',
+                76 => 'roy_customcategory2',
+                77 => 'roy_customcategory3',
+                78 => 'ps_cashondelivery',
             ],
-            'ps_cache_dir' => '/var/www/rimmakaramova-shop/data/var/cache/prod/',
+            'ps_cache_dir' => 'C:\\OSPanel\\domains\\localhost/var/cache/prod\\',
             'mail_themes_uri' => '/mails/themes',
             'doctrine_cache.apc.class' => 'Doctrine\\Common\\Cache\\ApcCache',
             'doctrine_cache.apcu.class' => 'Doctrine\\Common\\Cache\\ApcuCache',
@@ -1326,7 +1333,7 @@ class FrontContainer extends Container
             'doctrine.orm.second_level_cache.cache_configuration.class' => 'Doctrine\\ORM\\Cache\\CacheConfiguration',
             'doctrine.orm.second_level_cache.regions_configuration.class' => 'Doctrine\\ORM\\Cache\\RegionsConfiguration',
             'doctrine.orm.auto_generate_proxy_classes' => false,
-            'doctrine.orm.proxy_dir' => '/var/www/rimmakaramova-shop/data/var/cache/prod//doctrine/orm/Proxies',
+            'doctrine.orm.proxy_dir' => 'C:\\OSPanel\\domains\\localhost/var/cache/prod//doctrine/orm/Proxies',
             'doctrine.orm.proxy_namespace' => 'Proxies',
         ];
     }

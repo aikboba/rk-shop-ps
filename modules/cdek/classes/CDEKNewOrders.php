@@ -195,7 +195,7 @@ class CDEKNewOrders extends CDEKDocument
             '@attributes' => array(
                 'Number' => $this->order->id,
 //                'Address' => $address->address1.' '.$address->address2,
-                'DeliveryRecipientCost' => $shipping,
+                //'DeliveryRecipientCost' => $shipping,
                 'SendCityPostCode' => CDEKConf::getPostcode(),
                 'RecCityPostCode' => $address->postcode,
                 'RecipientName' => $recipient_name,

@@ -703,7 +703,11 @@ class CDEK extends Module
 
             self::$delay_carriers[$cart->id_carrier_current] = /*$period.' '.*/$date;
 
-            $price = $response['result']['price'];
+            //displayed shipping cost = [tariff downloaded via API cdek] + [order amount] * 0.75%
+            $summary = $cart->getOrderTotal(true,Cart::ONLY_PRODUCTS);
+            $price_ceil = $response['result']['price'] + ($summary) * 0.75 / 100 ;
+            $price =  ceil($price_ceil * 100)/100;
+
             $carrier = new Carrier($cart->id_carrier_current);
             $carriers_settings = FormatConfCarriers::getSettings();
 
