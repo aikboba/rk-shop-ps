@@ -98,10 +98,19 @@ class CDEKCalculate
 		/**
 		 * @var $address Address
 		 */
-		$address = $this->cart->getAddressCollection();
-		$address = current($address);
-		$data['receiverCityPostCode'] = $address->postcode;
-		$data['senderCityPostCode'] = CDEKConf::getPostcode();
+        $address = $this->cart->getAddressCollection();
+        $address = current($address);
+        $data['receiverCityPostCode'] = $address->postcode;
+        $data['senderCityPostCode'] = CDEKConf::getPostcode();
+        $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
+			SELECT c.`iso_code`
+			FROM `' . _DB_PREFIX_ . 'country` c
+			WHERE c.`id_country` = ' . (int) $address->id_country);
+        $url_city = "https://integration.cdek.ru/pvzlist.php?citypostcode=$address->postcode&countryiso=$result";
+        $xml = @simplexml_load_file("".$url_city."");
+        $cash_city = $xml->Pvz[0]['CityCode'];
+        $code_city = explode(" ", $cash_city);
+        $data['receiverCityId'] = $code_city[0];
 //        $data['company'] = CDEKConf::getCompany();
 //        $data['name'] = CDEKConf::getName();
 //        $data['address'] = CDEKConf::getAddress();

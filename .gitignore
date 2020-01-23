@@ -11,6 +11,8 @@ download/*
 /log/*
 /upload/*
 vendor/*
+var/*
+webservice/*
 docs/phpdoc-sf/
 composer.lock
 tests/Selenium/errorShots/
