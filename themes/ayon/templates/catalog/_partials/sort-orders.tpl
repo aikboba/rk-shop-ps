@@ -35,6 +35,7 @@
   </button>
   <div class="dropdown-menu">
     {foreach from=$listing.sort_orders item=sort_order}
+    {if $sort_order.label != 'Релевантность'}
       <a
         rel="nofollow"
         href="{$sort_order.url}"

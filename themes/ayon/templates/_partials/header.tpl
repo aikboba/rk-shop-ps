@@ -22,7 +22,7 @@
     </nav>
   {/block}
 {/if}
-
+<script src="/themes/ayon/_dev/js/increase_image.js" defer="false"></script>
 
 {block name='header_top'}
   <div class="header-top">
