@@ -779,9 +779,20 @@ class CDEK extends Module
         /**
          * @var $address Address
          */
+        
+        $address = current($address);
+        $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
+			SELECT c.`iso_code`
+			FROM `' . _DB_PREFIX_ . 'country` c
+			WHERE c.`id_country` = ' . (int) $address->id_country);
+        $url_city = "https://integration.cdek.ru/pvzlist.php?citypostcode=$address->postcode&countryiso=$result";
+        $xml = @simplexml_load_file("".$url_city."");
+        $cash_city = $xml->Pvz[0]['CityCode'];
+        $code_city = explode(" ", $cash_city);
+
         $address = current($address);
         if( $curl = curl_init() ) {
-            curl_setopt($curl, CURLOPT_URL, 'https://integration.cdek.ru/pvzlist.php?citypostcode='.$address->postcode);
+            curl_setopt($curl, CURLOPT_URL, 'https://integration.cdek.ru/pvzlist.php?citypostcode='.$address->postcode.'&cityid='.$code_city[0]);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
             $xml_response = curl_exec($curl);
             curl_close($curl);
