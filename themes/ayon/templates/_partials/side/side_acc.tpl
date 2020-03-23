@@ -70,6 +70,29 @@
 
     </div>
 {else}
+    <div class="acc_ul links">
+        <a href="https://rimmakaramova-shop.ru/content/7-information">
+            {l s='Общая информация' d='Shop.Theme.Customeraccount'}
+        </a>
+        <a href="https://rimmakaramova-shop.ru/content/8-composition-and-care">
+            {l s='Состав и уход' d='Shop.Theme.Customeraccount'}
+        </a>
+        <a href="https://rimmakaramova-shop.ru">
+            {l s='Каталог' d='Shop.Theme.Customeraccount'}
+        </a>
+        <a href="https://rimmakaramova-shop.ru/content/6-exchange-and-return">
+            {l s='Порядок осуществления обмена/возврата' d='Shop.Theme.Customeraccount'}
+        </a>
+        <a href="https://rimmakaramova-shop.ru/content/2-privacy-policy">
+            {l s='Политика конфиденциальности' d='Shop.Theme.Customeraccount'}
+        </a>
+        <a href="https://rimmakaramova-shop.ru/content/3-dogovor-oferty">
+            {l s='Договор оферты' d='Shop.Theme.Customeraccount'}
+        </a>
+        <a href="https://rimmakaramova-shop.ru/content/9-contacts">
+            {l s='Контакты' d='Shop.Theme.Customeraccount'}
+        </a></div>
+    
     <div class="acc_nolog acc_ul">
         <div class="acc_text_login">
             {l s='You should login to your account:' d='Shop.Theme.Customeraccount'}
