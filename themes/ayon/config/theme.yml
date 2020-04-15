@@ -112,7 +112,6 @@ global_settings:
     to_enable:
      - ps_linklist
      - roy_contactinfo
-     - roy_customizer
      - roy_specials
      - ets_megamenu
      - productcomments
@@ -128,6 +127,11 @@ global_settings:
      - ps_customtext
      - ps_imageslider
      - ps_banner
+     - blockreassurance
+     - ps_bestsellers
+     - roy_brands
+    to_reset:
+     - roy_customizer
 
   image_types:
     cart_default:

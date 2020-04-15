@@ -128,6 +128,16 @@
 										</div>
 									</div>
 								</div>
+								<div class="item_hides item-field form-group">
+									<div class="col-lg-9 col-lg-offset-3">
+										<div class="checkbox">
+											<label class="control-label">
+												{l s='Hide banner on desktops' d='Modules.RoyBanners.Shop'}
+												<input type="checkbox" name="item_hides" value="1"{if $hItem.hides == 1} checked="checked"{/if} />
+											</label>
+										</div>
+									</div>
+								</div>
 								<div class="title item-field form-group">
 									<label class="control-label col-lg-3">{l s='Title / Image title' d='Modules.RoyBanners.Shop'}</label>
 									<div class="col-lg-7">
@@ -138,7 +148,6 @@
 									<label class="control-label col-lg-3">{l s='Hook to which the image should be attached' d='Modules.RoyBanners.Shop'}</label>
 									<div class="col-lg-7">
 										<select name="item_hook" default="top" class="fixed-width-lg">
-											<option value="toppanel"{if $hItem.hook == 'toppanel'} selected="selected"{/if}>top panel</option>
 											<option value="top"{if $hItem.hook == 'top'} selected="selected"{/if}>top</option>
                       <option value="home"{if $hItem.hook == 'home'} selected="selected"{/if}>home</option>
                       <option value="footerbefore"{if $hItem.hook == 'footerbefore'} selected="selected"{/if}>before footer</option>

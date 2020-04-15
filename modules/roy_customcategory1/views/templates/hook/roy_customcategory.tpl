@@ -8,13 +8,11 @@
 {if isset($roythemes.nc_cc1_width) && $roythemes.nc_cc1_width == "2"} col-lg-6{/if}"
 data-auto="{$roythemes.nc_cc1_auto}"
 data-max-slides="{$roythemes.nc_cc1_per}">
-  {if false}
   <h2 class="h1 products-section-title text-uppercase">
     <a href="{$allProductsLink}">
       {l s='Our products' mod='roy_customcategory1'}
     </a>
   </h2>
-  {/if}
   {if isset($roythemes.nc_hp_title) && $roythemes.nc_hp_title == "2"}
     <div class="undertitle">{l s='Check the people choice' mod='roy_customcategory1'}</div>
   {/if}

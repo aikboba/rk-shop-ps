@@ -1,4 +1,4 @@
-<section class="featured-products slider-on clearfix mt-3">
+<section class="featured-products slider-on slideme clearfix mt-3">
   <div class="pp_products_wrapper">
     <h2 class="products-section-title">
       {if $products|@count == 1}

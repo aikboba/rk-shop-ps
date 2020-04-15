@@ -2,31 +2,3 @@
  * Custom code goes here.
  * A template should always ship with an empty custom.css
  */
-.underline-simple {
-    text-decoration: underline;
-}
-
-.cart-grid-right .cart-detailed-totals .card-block>* {
-    width: auto;
-}
-
-#pagenotfound #main .page-header,
-#products #main .page-header {
-    display: none;
-}
-#pagenotfound .page-not-found,
-#products .page-not-found {
-    padding: 3rem 0;
-}
-
-@media screen and (max-width: 768px) {
-    #pagenotfound .page-not-found .title404,
-    #products .page-not-found .title404 {
-        font-size: 8rem;
-    }
-}
-@media screen and (max-width: 420px) {
-    #top_column .breadcrumb .bread_name {
-        font-size: 30px;
-    }
-}

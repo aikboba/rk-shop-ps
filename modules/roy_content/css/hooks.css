@@ -162,6 +162,8 @@
     .roycontent .fit_content {
         display:none!important;
     }
+    .roycontent .hide_desktop {
+        display:none!important; }
 }
 @media (max-width:639px) {
     .roycontent .hide_mobile {

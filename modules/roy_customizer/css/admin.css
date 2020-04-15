@@ -224,6 +224,7 @@ body { padding:0!important; }
     vertical-align: top;
     margin-top:-6px; }
 .confirm {
+  margin:20px 0;
     font-size:14px;
     font-weight: bold;
     padding:30px;
@@ -831,6 +832,12 @@ body { padding:0!important; }
                     background: url(../images/pp_thumbs1.png) no-repeat top center; }
                 .roytc_content .pp_thumbs2:before{
                     background: url(../images/pp_thumbs2.png) no-repeat top center; }
+                .roytc_content .pp_con1:before{
+                    background: url(../images/pp_con1.png) no-repeat top center; }
+                .roytc_content .pp_con2:before{
+                    background: url(../images/pp_con2.png) no-repeat top center; }
+                .roytc_content .pp_con3:before{
+                    background: url(../images/pp_con3.png) no-repeat top center; }
                 .roytc_content .pp_lay1:before{
                     background: url(../images/pp_lay1.png) no-repeat top center; }
                 .roytc_content .pp_lay2:before{

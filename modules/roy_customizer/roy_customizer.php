@@ -23,7 +23,7 @@ class Roy_Customizer extends Module {
     public function __construct() {
         $this->name = 'roy_customizer';
         $this->tab = 'front_office_features';
-        $this->version = '1.2';
+        $this->version = '1.3';
         $this->author = 'RoyThemes';
         $this->need_instance = 0;
 
@@ -554,6 +554,10 @@ class Roy_Customizer extends Module {
 //  Product page
             "pp_lay" => "1",
             "pp_thumbs" => "2",
+            "nc_pp_sep" => "1",
+            "nc_pp_con" => "1",
+            "nc_pp_i" => "1",
+            "nc_pp_add" => "1",
             "pp_imgb" => "0",
             "pp_img_border" => "#f2f2f2",
             "pp_icon_border" => "#f2f2f2",
@@ -1236,6 +1240,10 @@ class Roy_Customizer extends Module {
 //  Product page
             Configuration::updateValue('RC_PP_LAY', $this -> defaults["pp_lay"]);
             Configuration::updateValue('RC_PP_THUMBS', $this -> defaults["pp_thumbs"]);
+            Configuration::updateValue('NC_PP_SEPS', $this -> defaults["nc_pp_sep"]);
+            Configuration::updateValue('NC_PP_CONS', $this -> defaults["nc_pp_con"]);
+            Configuration::updateValue('NC_PP_IS', $this -> defaults["nc_pp_i"]);
+            Configuration::updateValue('NC_PP_ADDS', $this -> defaults["nc_pp_add"]);
             Configuration::updateValue('RC_PP_IMGB', $this -> defaults["pp_imgb"]);
             Configuration::updateValue('RC_PP_IMG_BORDER', $this -> defaults["pp_img_border"]);
             Configuration::updateValue('RC_PP_ICON_BORDER', $this -> defaults["pp_icon_border"]);
@@ -1913,6 +1921,10 @@ class Roy_Customizer extends Module {
 
         //  Product page
         !Configuration::deleteByName('RC_PP_LAY') ||
+        !Configuration::deleteByName('NC_PP_SEPS') ||
+        !Configuration::deleteByName('NC_PP_CONS') ||
+        !Configuration::deleteByName('NC_PP_IS') ||
+        !Configuration::deleteByName('NC_PP_ADDS') ||
         !Configuration::deleteByName('RC_PP_THUMBS') ||
         !Configuration::deleteByName('RC_PP_IMGB') ||
         !Configuration::deleteByName('RC_PP_IMG_BORDER') ||
@@ -2113,7 +2125,7 @@ class Roy_Customizer extends Module {
             $find_nc = "nc_";
             if (substr($key, 0, 3) === $find_nc) {
                 $target = strtoupper($key);
-                if (!Configuration::hasKey($target) || !Configuration::get($target)) {
+                if (!Configuration::get($target)) {
                     Configuration::updateValue((string)$target, $this -> defaults["$key"]);
                 }
             }
@@ -2596,6 +2608,10 @@ class Roy_Customizer extends Module {
               'NC_AIS',
 
               'RC_PP_LAY',
+              'NC_PP_SEPS',
+              'NC_PP_CONS',
+              'NC_PP_IS',
+              'NC_PP_ADDS',
               'RC_PP_THUMBS',
               'RC_PP_IMGB',
               'RC_PP_IMG_BORDER',
@@ -2888,6 +2904,69 @@ class Roy_Customizer extends Module {
         }
 
 
+        if (Tools::isSubmit('nc_hm_im_upload')) {
+            if (isset($_FILES['nc_hm_im_field']) && isset($_FILES['nc_hm_im_field']['tmp_name']) && !empty($_FILES['nc_hm_im_field']['tmp_name'])) {
+                if ($error = ImageManager::validateUpload($_FILES['nc_hm_im_field'], Tools::convertBytes(ini_get('upload_max_filesize'))))
+
+                    $errors .= $error;
+
+                else {
+
+                    Configuration::updateValue('NC_HM_IM_BG_EXT', substr($_FILES['nc_hm_im_field']['name'], strrpos($_FILES['nc_hm_im_field']['name'], '.') + 1));
+
+                    if (Shop::getContext() == Shop::CONTEXT_SHOP)
+                        $adv_imgname = 'nc_hm_im_background'.'-'.(int)$this->context->shop->getContextShopID();
+
+                    if (!move_uploaded_file($_FILES['nc_hm_im_field']['tmp_name'], _PS_MODULE_DIR_ . $this -> name . '/upload/' . $adv_imgname . '.' . Configuration::get('NC_HM_IM_BG_EXT')))
+                        $errors .= $this->l('Error move uploaded file');
+                        $output = '<div class="conf confirm">' . $this->l('Image uploaded') . '</div>' . $output;
+                }
+            }
+        }
+        if (Tools::isSubmit('nc_hm_im_delete')) {
+
+            if (Shop::getContext() == Shop::CONTEXT_SHOP)
+                $adv_imgname = 'nc_hm_im_background'.'-'.(int)$this->context->shop->getContextShopID();
+
+            if (file_exists(_PS_MODULE_DIR_ . $this -> name . '/upload/'.$adv_imgname.'.' . Configuration::get('NC_HM_IM_BG_EXT')))
+                unlink(_PS_MODULE_DIR_ . $this -> name . '/upload/'.$adv_imgname.'.' . Configuration::get('NC_HM_IM_BG_EXT'));
+            Configuration::updateValue('NC_HM_IM_BG_EXT', "");
+
+            $output = '<div class="conf confirm">' . $this->l('Image removed') . '</div>' . $output;
+        }
+
+        if (Tools::isSubmit('nc_hb_im_upload')) {
+            if (isset($_FILES['nc_hb_im_field']) && isset($_FILES['nc_hb_im_field']['tmp_name']) && !empty($_FILES['nc_hb_im_field']['tmp_name'])) {
+                if ($error = ImageManager::validateUpload($_FILES['nc_hb_im_field'], Tools::convertBytes(ini_get('upload_max_filesize'))))
+
+                    $errors .= $error;
+
+                else {
+
+                    Configuration::updateValue('NC_HB_IM_BG_EXT', substr($_FILES['nc_hb_im_field']['name'], strrpos($_FILES['nc_hb_im_field']['name'], '.') + 1));
+
+                    if (Shop::getContext() == Shop::CONTEXT_SHOP)
+                        $adv_imgname = 'nc_hb_im_background'.'-'.(int)$this->context->shop->getContextShopID();
+
+                    if (!move_uploaded_file($_FILES['nc_hb_im_field']['tmp_name'], _PS_MODULE_DIR_ . $this -> name . '/upload/' . $adv_imgname . '.' . Configuration::get('NC_HB_IM_BG_EXT')))
+                        $errors .= $this->l('Error move uploaded file');
+                        $output = '<div class="conf confirm">' . $this->l('Image uploaded') . '</div>' . $output;
+                }
+            }
+        }
+        if (Tools::isSubmit('nc_hb_im_delete')) {
+
+            if (Shop::getContext() == Shop::CONTEXT_SHOP)
+                $adv_imgname = 'nc_hb_im_background'.'-'.(int)$this->context->shop->getContextShopID();
+
+            if (file_exists(_PS_MODULE_DIR_ . $this -> name . '/upload/'.$adv_imgname.'.' . Configuration::get('NC_HB_IM_BG_EXT')))
+                unlink(_PS_MODULE_DIR_ . $this -> name . '/upload/'.$adv_imgname.'.' . Configuration::get('NC_HB_IM_BG_EXT'));
+            Configuration::updateValue('NC_HB_IM_BG_EXT', "");
+
+            $output = '<div class="conf confirm">' . $this->l('Image removed') . '</div>' . $output;
+        }
+
+
         if (Tools::isSubmit('nc_ot_im_upload')) {
             if (isset($_FILES['nc_ot_im_field']) && isset($_FILES['nc_ot_im_field']['tmp_name']) && !empty($_FILES['nc_ot_im_field']['tmp_name'])) {
                 if ($error = ImageManager::validateUpload($_FILES['nc_ot_im_field'], Tools::convertBytes(ini_get('upload_max_filesize'))))
@@ -2915,6 +2994,69 @@ class Roy_Customizer extends Module {
             if (file_exists(_PS_MODULE_DIR_ . $this -> name . '/upload/'.$adv_imgname.'.' . Configuration::get('NC_OT_IM_BG_EXT')))
                 unlink(_PS_MODULE_DIR_ . $this -> name . '/upload/'.$adv_imgname.'.' . Configuration::get('NC_OT_IM_BG_EXT'));
             Configuration::updateValue('NC_OT_IM_BG_EXT', "");
+
+            $output = '<div class="conf confirm">' . $this->l('Image removed') . '</div>' . $output;
+        }
+
+
+        if (Tools::isSubmit('nc_om_im_upload')) {
+            if (isset($_FILES['nc_om_im_field']) && isset($_FILES['nc_om_im_field']['tmp_name']) && !empty($_FILES['nc_om_im_field']['tmp_name'])) {
+                if ($error = ImageManager::validateUpload($_FILES['nc_om_im_field'], Tools::convertBytes(ini_get('upload_max_filesize'))))
+
+                    $errors .= $error;
+
+                else {
+
+                    Configuration::updateValue('NC_OM_IM_BG_EXT', substr($_FILES['nc_om_im_field']['name'], strrpos($_FILES['nc_om_im_field']['name'], '.') + 1));
+
+                    if (Shop::getContext() == Shop::CONTEXT_SHOP)
+                        $adv_imgname = 'nc_om_im_background'.'-'.(int)$this->context->shop->getContextShopID();
+
+                    if (!move_uploaded_file($_FILES['nc_om_im_field']['tmp_name'], _PS_MODULE_DIR_ . $this -> name . '/upload/' . $adv_imgname . '.' . Configuration::get('NC_OM_IM_BG_EXT')))
+                        $errors .= $this->l('Error move uploaded file');
+                        $output = '<div class="conf confirm">' . $this->l('Image uploaded') . '</div>' . $output;
+                }
+            }
+        }
+        if (Tools::isSubmit('nc_om_im_delete')) {
+
+            if (Shop::getContext() == Shop::CONTEXT_SHOP)
+                $adv_imgname = 'nc_om_im_background'.'-'.(int)$this->context->shop->getContextShopID();
+
+            if (file_exists(_PS_MODULE_DIR_ . $this -> name . '/upload/'.$adv_imgname.'.' . Configuration::get('NC_OM_IM_BG_EXT')))
+                unlink(_PS_MODULE_DIR_ . $this -> name . '/upload/'.$adv_imgname.'.' . Configuration::get('NC_OM_IM_BG_EXT'));
+            Configuration::updateValue('NC_OM_IM_BG_EXT', "");
+
+            $output = '<div class="conf confirm">' . $this->l('Image removed') . '</div>' . $output;
+        }
+
+        if (Tools::isSubmit('nc_ob_im_upload')) {
+            if (isset($_FILES['nc_ob_im_field']) && isset($_FILES['nc_ob_im_field']['tmp_name']) && !empty($_FILES['nc_ob_im_field']['tmp_name'])) {
+                if ($error = ImageManager::validateUpload($_FILES['nc_ob_im_field'], Tools::convertBytes(ini_get('upload_max_filesize'))))
+
+                    $errors .= $error;
+
+                else {
+
+                    Configuration::updateValue('NC_OB_IM_BG_EXT', substr($_FILES['nc_ob_im_field']['name'], strrpos($_FILES['nc_ob_im_field']['name'], '.') + 1));
+
+                    if (Shop::getContext() == Shop::CONTEXT_SHOP)
+                        $adv_imgname = 'nc_ob_im_background'.'-'.(int)$this->context->shop->getContextShopID();
+
+                    if (!move_uploaded_file($_FILES['nc_ob_im_field']['tmp_name'], _PS_MODULE_DIR_ . $this -> name . '/upload/' . $adv_imgname . '.' . Configuration::get('NC_OB_IM_BG_EXT')))
+                        $errors .= $this->l('Error move uploaded file');
+                        $output = '<div class="conf confirm">' . $this->l('Image uploaded') . '</div>' . $output;
+                }
+            }
+        }
+        if (Tools::isSubmit('nc_ob_im_delete')) {
+
+            if (Shop::getContext() == Shop::CONTEXT_SHOP)
+                $adv_imgname = 'nc_ob_im_background'.'-'.(int)$this->context->shop->getContextShopID();
+
+            if (file_exists(_PS_MODULE_DIR_ . $this -> name . '/upload/'.$adv_imgname.'.' . Configuration::get('NC_OB_IM_BG_EXT')))
+                unlink(_PS_MODULE_DIR_ . $this -> name . '/upload/'.$adv_imgname.'.' . Configuration::get('NC_OB_IM_BG_EXT'));
+            Configuration::updateValue('NC_OB_IM_BG_EXT', "");
 
             $output = '<div class="conf confirm">' . $this->l('Image removed') . '</div>' . $output;
         }
@@ -3578,6 +3720,10 @@ class Roy_Customizer extends Module {
             //  Product page
             Configuration::updateValue('RC_PP_LAY', (string)(Tools::getValue("pp_lay")));
             Configuration::updateValue('RC_PP_THUMBS', (string)(Tools::getValue("pp_thumbs")));
+            Configuration::updateValue('NC_PP_SEPS', (string)(Tools::getValue("nc_pp_sep")));
+            Configuration::updateValue('NC_PP_CONS', (string)(Tools::getValue("nc_pp_con")));
+            Configuration::updateValue('NC_PP_IS', (string)(Tools::getValue("nc_pp_i")));
+            Configuration::updateValue('NC_PP_ADDS', (string)(Tools::getValue("nc_pp_add")));
             Configuration::updateValue('RC_PP_IMGB', (string)(Tools::getValue("pp_imgb")));
             Configuration::updateValue('RC_PP_IMG_BORDER', (string)(Tools::getValue("pp_img_border")));
             Configuration::updateValue('RC_PP_ICON_BORDER', (string)(Tools::getValue("pp_icon_border")));
@@ -4256,6 +4402,10 @@ class Roy_Customizer extends Module {
 //  Product page
           Configuration::updateValue('RC_PP_LAY', $this -> defaults["pp_lay"]);
           Configuration::updateValue('RC_PP_THUMBS', $this -> defaults["pp_thumbs"]);
+          Configuration::updateValue('NC_PP_SEPS', $this -> defaults["nc_pp_sep"]);
+          Configuration::updateValue('NC_PP_CONS', $this -> defaults["nc_pp_con"]);
+          Configuration::updateValue('NC_PP_IS', $this -> defaults["nc_pp_i"]);
+          Configuration::updateValue('NC_PP_ADDS', $this -> defaults["nc_pp_add"]);
           Configuration::updateValue('RC_PP_IMGB', $this -> defaults["pp_imgb"]);
           Configuration::updateValue('RC_PP_IMG_BORDER', $this -> defaults["pp_img_border"]);
           Configuration::updateValue('RC_PP_ICON_BORDER', $this -> defaults["pp_icon_border"]);
@@ -8287,6 +8437,45 @@ class Roy_Customizer extends Module {
                   </div></div>
                   </div>
 
+                  <div class="roytc_row ds_wrap fw">
+                        <label>' . $this->l('Content Column Layout') . '</label>
+                        <div class="margin-form">
+                            <input type="radio" class="regular-radio" name="nc_pp_con" value="1" id="nc_pp_con1" ' . ((Configuration::get('NC_PP_CONS') == "1") ? 'checked="checked" ' : '') . ' />
+                            <label class="ds pp_con1" for="nc_pp_con1"> <span>1 . Default</span></label>
+                            <input type="radio" class="regular-radio" name="nc_pp_con" value="2" id="nc_pp_con2" ' . ((Configuration::get('NC_PP_CONS') == "2") ? 'checked="checked" ' : '') . ' />
+                            <label class="ds pp_con2" for="nc_pp_con2"> <span>2 . Different order</span></label>
+                            <input type="radio" class="regular-radio" name="nc_pp_con" value="3" id="nc_pp_con3" ' . ((Configuration::get('NC_PP_CONS') == "3") ? 'checked="checked" ' : '') . ' />
+                            <label class="ds pp_con3" for="nc_pp_con3"> <span>3 . Centered</span></label>
+                  </div></div>
+
+                  <div class="roytc_row">
+                        <label>' . $this->l('Enable separators between product page blocks?') . '</label>
+                        <div class="yn">
+                        <div class="margin-form">
+                            <input type="radio" class="regular-radio nc_pp_sep" name="nc_pp_sep" id="nc_pp_sep1" value="1" ' . ((Configuration::get('NC_PP_SEPS') == 1) ? 'checked="checked" ' : '') . '/>
+                            <label class="t" for="nc_pp_sep1"> Yes</label>
+                            <input type="radio" class="regular-radio nc_pp_sep" name="nc_pp_sep" id="nc_pp_sep0" value="0" ' . ((Configuration::get('NC_PP_SEPS') == 0) ? 'checked="checked" ' : '') . '/>
+                            <label class="t" for="nc_pp_sep0"> No</label>
+                  </div></div></div>
+                  <div class="roytc_row">
+                        <label>' . $this->l('Full width add to cart button?') . '</label>
+                        <div class="yn">
+                        <div class="margin-form">
+                            <input type="radio" class="regular-radio nc_pp_add" name="nc_pp_add" id="nc_pp_add1" value="1" ' . ((Configuration::get('NC_PP_ADDS') == 1) ? 'checked="checked" ' : '') . '/>
+                            <label class="t" for="nc_pp_add1"> Yes</label>
+                            <input type="radio" class="regular-radio nc_pp_add" name="nc_pp_add" id="nc_pp_add0" value="0" ' . ((Configuration::get('NC_PP_ADDS') == 0) ? 'checked="checked" ' : '') . '/>
+                            <label class="t" for="nc_pp_add0"> No</label>
+                  </div></div></div>
+                  <div class="roytc_row">
+                        <label>' . $this->l('Add to cart button icon?') . '</label>
+                        <div class="yn">
+                        <div class="margin-form">
+                            <input type="radio" class="regular-radio nc_pp_i" name="nc_pp_i" id="nc_pp_i1" value="1" ' . ((Configuration::get('NC_PP_IS') == 1) ? 'checked="checked" ' : '') . '/>
+                            <label class="t" for="nc_pp_i1"> Yes</label>
+                            <input type="radio" class="regular-radio nc_pp_i" name="nc_pp_i" id="nc_pp_i0" value="0" ' . ((Configuration::get('NC_PP_IS') == 0) ? 'checked="checked" ' : '') . '/>
+                            <label class="t" for="nc_pp_i0"> No</label>
+                  </div></div></div>
+
 
                 </div>
 
@@ -9885,7 +10074,7 @@ class Roy_Customizer extends Module {
       $css .= 'body, p, #product_comments_block_tab button.usefulness_btn, .active_filters .filter-block .close, .products-sort-order .select-title, .products-sort-order .dropdown-menu { color: ' . Configuration::get('RC_G_BODY_TEXT') . ' }
       '; }
       if (Configuration::get('RC_G_BODY_COMMENT')) {
-      $css .= '.text-muted, body#checkout section.checkout-step .delete-address, body#checkout section.checkout-step .edit-address, body#checkout section.checkout-step .address, .sdsarticleHeader .meta, .product-line-grid-right .cart-line-product-actions .remove-from-cart, .product-line-grid-right .product-price .remove-from-cart, .cart-grid-body .product-line-info.atts *, .sdsarticleHeader span, .sdsarticleHeader span a, .pagination .showing, .form-control-comment, #main .page-footer a i, .col-content-inside .comments_note .star_content .nb-comments, .fl { color: ' . Configuration::get('RC_G_BODY_COMMENT') . ' }
+      $css .= '.text-muted, body#checkout section.checkout-step .delete-address, body#checkout section.checkout-step .edit-address, body#checkout section.checkout-step .address, .sdsarticleHeader .meta, .product-line-grid-right .cart-line-product-actions .remove-from-cart, .product-line-grid-right .product-price .remove-from-cart, .cart-grid-body .product-line-info.atts *, .sdsarticleHeader span, .sdsarticleHeader span a, .pagination .showing, .form-control-comment, #main .page-footer a i, .fl { color: ' . Configuration::get('RC_G_BODY_COMMENT') . ' }
       '; }
       if (Configuration::get('RC_G_BODY_LINK')) {
       $css .= 'a, a:visited, .quickview button.close, .active_filters .filter-block, #main .input-group.bootstrap-touchspin .input-group-btn>.btn, .quickview .input-group.bootstrap-touchspin .input-group-btn>.btn { color: ' . Configuration::get('RC_G_BODY_LINK') . ' }
@@ -9917,6 +10106,7 @@ class Roy_Customizer extends Module {
         margin-right: 0;
         width: 0;
       }
+      .goreviews:hover:after { background:' . Configuration::get('RC_G_BODY_LINK_HOVER') . '; }
       '; }
 
       if (Configuration::get('RC_LABEL')) {
@@ -9926,6 +10116,7 @@ class Roy_Customizer extends Module {
       $css .= '.h1, .h2, .h3, .h4, #product .featured-products h2 a, .products-section-title a, #product_comments_block_tab .comment_author_infos strong, h4.title_block, #main h1:not(.active-filter-title), #new_comment_form .product .product_desc .product_name, #new_comment_form .title, #product .tabs .nav-tabs .nav-link, #product .tabs .nav-tabs .nav-link:active, #product .featured-products h2, .products-section-title, h1.page-header, h2.page-header, h3.page-header, h4.page-header, h5.page-header, h6.page-header, #category #left-column #search_filters .facet .navbar-toggler i { color: ' . Configuration::get('RC_G_HEADER') . ' }
       .flickity-button-icon { fill: ' . Configuration::get('RC_G_HEADER') . '!important }
       .page-addresses .address, .page-addresses .address .address-footer, .tabs .nav-tabs .nav-link:hover, .tabs .nav-tabs .nav-link.active, .tabs .tab-pane .product-features .h6, .tabs .tab-pane label { border-color:' . Configuration::get('RC_G_HEADER') . ' }
+      .tabs .nav-tabs .nav-link:after { background: ' . Configuration::get('RC_G_HEADER') . ' }
       '; }
 
 
@@ -9943,8 +10134,8 @@ class Roy_Customizer extends Module {
       $css .= '
       #roy_specials_col .flickity-prev-next-button {
         top: -' . Configuration::get('RC_SIDEBAR_TITLE_MARGIN') . 'px;
-        transform: translateY(-' . Configuration::get('RC_FS_PAGE_SIDE') . 'px);
-        width:32px;
+        transform: translateY(-30px);
+        width:28px;
         height:32px;
       }
       #roy_specials_col .flickity-prev-next-button.previous {
@@ -10025,7 +10216,7 @@ class Roy_Customizer extends Module {
           @media(min-width:992px) {
             .featured-products .flickity-prev-next-button, #phblogrecentposts .flickity-prev-next-button {
               top: -4rem;
-              transform: translateY(-' . Configuration::get('RC_FS_HOME_TIT') . 'px);
+              transform: translateY(-30px);
             }
             .featured-products .flickity-prev-next-button.previous, #phblogrecentposts .flickity-prev-next-button.previous {
               left:auto;
@@ -10043,7 +10234,7 @@ class Roy_Customizer extends Module {
           @media(min-width:992px) {
             .featured-products .flickity-prev-next-button {
               top: -4rem;
-              transform: translateY(-' . Configuration::get('RC_FS_HOME_TIT') . 'px);
+              transform: translateY(-30px);
             }
             .featured-products .flickity-prev-next-button.previous {
               left:18px;
@@ -10515,13 +10706,27 @@ class Roy_Customizer extends Module {
             // new cart icons
             if (Configuration::get('RC_CART_ICON')) {
               $css .= '
-                #header .row.action .blockcart a i, .shopping-cart.empty i {
+                #header .row.action .blockcart a i, .shopping-cart.empty i, .add .btn.add-to-cart i {
                   -webkit-mask-image: url(../images/rt_' . Configuration::get('RC_CART_ICON') . '.svg);
                   mask-image: url(../images/rt_' . Configuration::get('RC_CART_ICON') . '.svg);
                   =webkit-mask-size:cover;
                   mask-size:cover;
                 } '; }
 
+              $css .= '
+                .add .btn.add-to-cart i {
+                  background-color: ' . Configuration::get('NC_PP_ADD_COLOR') . ';
+                }
+                .add .btn.add-to-cart .plus {
+                  color: ' . Configuration::get('NC_PP_ADD_COLOR') . ';
+                }
+                .add .btn.add-to-cart:hover i {
+                  background-color: ' . Configuration::get('RC_B_NORMAL_COLOR_HOVER') . ';
+                }
+                .add .btn.add-to-cart:hover .plus {
+                  color: ' . Configuration::get('RC_B_NORMAL_COLOR_HOVER') . ';
+                }
+                ';
 
 
 // ACC styles start
@@ -11212,6 +11417,7 @@ class Roy_Customizer extends Module {
 
             .footer-container h3 {
               font-size: ' . Configuration::get('RC_FS_FOOT') . 'px;
+              line-height: 1.1;
               font-weight: ' . Configuration::get('RC_FW_FOOT') . ';
               letter-spacing: ' . Configuration::get('RC_LS_FOOT') . 'px;
               text-transform: ' . Configuration::get('RC_UP_FOOT') . ';
@@ -11985,8 +12191,16 @@ body#index.layout-left-column #main > .container { padding-left:0; padding-right
 
             if (Configuration::get('NC_HP_TITLE') =="2") {
             $css .= '
-              #index #main h2.products-section-title {
+              #index #main section h2.products-section-title {
                   margin-bottom:1.75rem;
+              }
+              #index #main section.simpleblog h2.products-section-title {
+                  margin-bottom:4rem;
+              }
+              @media(max-width:767px) {
+                body:not(#product) .featured-products .flickity-prev-next-button {
+                  top: -2.25rem;
+                }
               }
             ';}
             if (Configuration::get('NC_HP_ALIGN') =="2") {
@@ -13141,7 +13355,19 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
               .product-thumbs-wrapper {
                 max-width:calc(100% - 80px)!important;
               }
-
+              #index.layout-left-column #wrapper > .container, #index.layout-right-column #wrapper > .container {
+                padding-left:0!important;
+                padding-right:0!important;
+              }
+              #main .featured-products.mini .products .products-box .product-item .thumbnail-container {
+                margin-bottom:0;
+              }
+              #main .featured-products.mini .products .products-box .product-item .thumbnail-container .product-price-and-shipping i {
+                display:none;
+              }
+              #index #main h2.products-section-title {
+                text-align:center;
+              }
             }
             ';
 
@@ -13253,7 +13479,7 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
             '; }
         if (Configuration::get('RC_SIDEBAR_B') == "1") {
             $css .= '
-            .side-column>*:not(:last-child), .side-column>.sidebar-block:not(:last-child) {
+            .side-column>*:not(:last-child):not(.roycontent), .side-column>.sidebar-block:not(:last-child) {
               padding-bottom: ' . Configuration::get('RC_SIDEBAR_PADDING') . 'px;
               border-bottom: ' . Configuration::get('RC_SIDEBAR_BWIDTH') . 'px solid ' . Configuration::get('RC_SIDEBAR_BORDER') . ';
             }
@@ -13705,7 +13931,7 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
           $css .= '
 
             .thumbnail-container:hover .count_icon {
-              transform: scale(0.72) translateY(calc(100% + 12px)) translateX(1px);
+              transform: scale(0.62) translateY(calc(100% + 16px)) translateX(1px);
             }
 
             .product-image .favoritesButton svg * { stroke:' . Configuration::get('RC_PL_HOVER_BUT_OUT') . '!important; }
@@ -13827,7 +14053,7 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
           ';}
           if (Configuration::get('RC_PL_PRODUCT_SALE_BG')) {
           $css .= '
-          .col-image .discount-amount.discount-amount, .col-image .discount-amount.discount-percentage, .col-image .discount-amount.on-sale, .col-image .discount-percentage.discount-amount, .col-image .discount-percentage.discount-percentage, .col-image .discount-percentage.on-sale, .col-image .on-sale.discount-amount, .col-image .on-sale.discount-percentage, .col-image .on-sale.on-sale, .col-image .online-only.discount-amount, .col-image .online-only.discount-percentage, .col-image .online-only.on-sale, .product-miniature .product-flag, .col-image .pack.discount-amount, .col-image .pack.discount-percentage, .col-image .pack.on-sale, .col-image .product-flags .new.discount-amount, .col-image .product-flags .new.discount-percentage, .col-image .product-flags .new.on-sale, .product-miniature .discount-amount.discount-amount, .product-miniature .discount-amount.discount-percentage, .product-miniature .discount-amount.on-sale, .product-miniature .discount-percentage.discount-amount, .product-miniature .discount-percentage.discount-percentage, .product-miniature .discount-percentage.on-sale, .product-miniature .on-sale.discount-amount, .product-miniature .on-sale.discount-percentage, .product-miniature .on-sale.on-sale, .product-miniature .online-only.discount-amount, .product-miniature .online-only.discount-percentage, .product-miniature .online-only.on-sale, .product-miniature .pack.discount-amount, .product-miniature .pack.discount-percentage, .product-miniature .pack.on-sale, .product-miniature .product-flags .new.discount-amount, .product-miniature .product-flags .new.discount-percentage, .product-miniature .product-flags .new.on-sale {
+          #main .featured-products.mini .product-price-and-shipping i, .col-image .discount-amount.discount-amount, .col-image .discount-amount.discount-percentage, .col-image .discount-amount.on-sale, .col-image .discount-percentage.discount-amount, .col-image .discount-percentage.discount-percentage, .col-image .discount-percentage.on-sale, .col-image .on-sale.discount-amount, .col-image .on-sale.discount-percentage, .col-image .on-sale.on-sale, .col-image .online-only.discount-amount, .col-image .online-only.discount-percentage, .col-image .online-only.on-sale, .product-miniature .product-flag, .col-image .pack.discount-amount, .col-image .pack.discount-percentage, .col-image .pack.on-sale, .col-image .product-flags .new.discount-amount, .col-image .product-flags .new.discount-percentage, .col-image .product-flags .new.on-sale, .product-miniature .discount-amount.discount-amount, .product-miniature .discount-amount.discount-percentage, .product-miniature .discount-amount.on-sale, .product-miniature .discount-percentage.discount-amount, .product-miniature .discount-percentage.discount-percentage, .product-miniature .discount-percentage.on-sale, .product-miniature .on-sale.discount-amount, .product-miniature .on-sale.discount-percentage, .product-miniature .on-sale.on-sale, .product-miniature .online-only.discount-amount, .product-miniature .online-only.discount-percentage, .product-miniature .online-only.on-sale, .product-miniature .pack.discount-amount, .product-miniature .pack.discount-percentage, .product-miniature .pack.on-sale, .product-miniature .product-flags .new.discount-amount, .product-miniature .product-flags .new.discount-percentage, .product-miniature .product-flags .new.on-sale {
             background-color: ' . Configuration::get('RC_PL_PRODUCT_SALE_BG') . ' ;
             border-color: ' . Configuration::get('RC_PL_PRODUCT_SALE_BORDER') . ';
             color: ' . Configuration::get('RC_PL_PRODUCT_SALE_COLOR') . '
@@ -13955,6 +14181,105 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
         ';
 
 
+
+
+
+        if (Configuration::get('NC_PP_SEPS') == "1") {
+          $css .= '
+            .col-content .product-info {
+                margin-top: 3rem;
+                padding-top: 3rem;
+                border-top: 2px solid ' . Configuration::get('RC_G_BORDER') . ';
+            }
+            .col-content .product-actions {
+                margin-top: 3rem;
+                padding-top: 2rem;
+                border-top: 2px solid ' . Configuration::get('RC_G_BORDER') . ';
+            }
+        ';
+
+          if (Configuration::get('NC_PP_CONS') == "2") {
+            $css .= '
+            .col-content .prod-buttons {
+                margin-top: 3rem;
+                padding-top: 2rem;
+                border-top: 2px solid ' . Configuration::get('RC_G_BORDER') . ';
+            }
+
+          '; }
+
+
+        }
+
+        if (Configuration::get('NC_PP_CONS') == "3") {
+          $css .= '
+          .col-content-inside > * {
+            text-align:center;
+          }
+          .breadcrumb, .col-content .product-quantity .add, .col-content .product-price, .col-content .product-info > div, .col-content .prod-buttons, .col-content-inside .comments_note .star_content {
+            justify-content:center;
+          }
+          .product-variants > .product-variants-item ul li:last-child {
+            margin-right:0;
+          }
+          .prod-buttons > *:last-child, .product-info > div:not(.product-manufacturer) {
+            margin-right:0;
+          }
+          .product-quantity {
+            flex-direction:column;
+          }
+          .col-content .product-quantity .qty {
+            margin-right:0;
+            justify-content:center;
+            margin-bottom:14px;
+          }
+          .product-quantity .input-group.bootstrap-touchspin {
+            justify-content:center;
+          }
+          .product-quantity #quantity_wanted {
+            flex: 0;
+            min-width: 120px;
+          }
+          .product-info>div.product-manufacturer a {
+            margin-left:14px;
+          }
+          .product-actions .product-variants-item ul {
+            padding-right:2px;
+          }
+          .product-variants>.product-variants-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+
+
+        '; }
+
+
+        if (Configuration::get('NC_PP_IS') == "1") {
+          $css .= '
+            .add .btn.add-to-cart:hover i {
+                transform: translateX(6px);
+            }
+            .add .btn.add-to-cart:hover .text {
+                transform: translateX(6px);
+            }
+            .add .btn.add-to-cart:hover .plus {
+              transform: translateX(-6px);
+              opacity: 1;
+            }
+        '; }
+
+        if (Configuration::get('NC_PP_ADDS') == "1") {
+          $css .= '
+            .product-quantity .add {
+              flex:1 auto;
+            }
+            .add .btn.add-to-cart {
+              width:100%;
+            }
+        '; }
+
         if (Configuration::get('RC_PP_LAY') == "1") {
 
 
@@ -13962,12 +14287,20 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
               $css .= '.images-container .product-images li.thumb-container { border:2px solid ' . Configuration::get('RC_PP_IMG_BORDER') . ' }'; }
 
           if (Configuration::get('RC_PP_THUMBS') == "1") {
-              $css .= ''; }
+              $css .= '
+              .product-thumbs-wrapper {
+                  max-width: 100%;
+                  width: 100%;
+                  transform: none;
+                  positions: relative;
+              }
+              '; }
 
           if (Configuration::get('RC_PP_THUMBS') == "2") {
               $css .= '
               .product-thumbs-wrapper {
                   max-width: 64%;
+                  width: 64%;
                   transform: translateY(-50%);
                   background:' . Configuration::get('RC_PP_ICON_BORDER') . ';
                   border:4px solid ' . Configuration::get('RC_PP_ICON_BORDER') . ';
@@ -13975,9 +14308,11 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
               }
               .product-thumbs-wrapper.w33 {
                   max-width: 56%;
+                  width: 56%;
               }
               .product-thumbs-wrapper.w50 {
                   max-width: 44%;
+                  width: 44%;
               }
               ';
 
@@ -14039,7 +14374,8 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
             $css .= '.product-price { color: ' . Configuration::get('RC_PP_PRICE_COLOR') . ' } ' ; }
 
         if (Configuration::get('NC_PP_ADD_BG')) {
-            $css .= ' .add .btn.add-to-cart { background-color: ' . Configuration::get('NC_PP_ADD_BG') . '; border-color: ' . Configuration::get('NC_PP_ADD_BORDER') . '; color: ' . Configuration::get('NC_PP_ADD_COLOR') . ' }'; }
+            $css .= '
+             .add .btn.add-to-cart { padding:22px 52px; background-color: ' . Configuration::get('NC_PP_ADD_BG') . '; border-color: ' . Configuration::get('NC_PP_ADD_BORDER') . '; color: ' . Configuration::get('NC_PP_ADD_COLOR') . ' }'; }
 
         if (Configuration::get('RC_PP_ATT_LABEL')) {
             $css .= '
@@ -14966,7 +15302,7 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
                               <p class="clear helpcontent">' . $this->l('If you want to show Patterns or Background Color, delete your background image') . '</p>
                               </div>
 
-                              <div class="roytc_row ds_wrap">
+                              <div class="roytc_row ds_wrap fw">
                               <label>' . $this->l('Background repeat') . '</label>
                               <div class="margin-form">
                               <input type="radio" class="regular-radio" name="'.$panel.'_bg_repeat" id="'.$panel.'_bg_repeat_0" value="0" ' . ((Configuration::get('NC_'.$panelupper.'_BG_REPEAT') == 0) ? 'checked="checked" ' : '') . '/>
@@ -14983,7 +15319,7 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
                               </div>
                               </div>
 
-                              <div class="roytc_row ds_wrap">
+                              <div class="roytc_row ds_wrap fw">
                               <label>' . $this->l('Background position') . '</label>
                               <div class="margin-form">
                               <input type="radio" class="regular-radio" name="'.$panel.'_bg_position" id="'.$panel.'_bg_position_0" value="0" ' . ((Configuration::get('NC_'.$panelupper.'_BG_POSITION') == 0) ? 'checked="checked" ' : '') . '/>
@@ -15238,6 +15574,7 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
 
                   'nc_pl_shadow' => (Configuration::get('NC_PL_SHADOWS')),
                   'pl_lay' => (Configuration::get('RC_PL_LAY')),
+                  'pp_thumbs' => (Configuration::get('RC_PP_THUMBS')),
                   'nc_cl' => (Configuration::get('NC_CLS')),
                   'nc_cll' => (Configuration::get('NC_CLLS')),
 
@@ -15258,6 +15595,8 @@ if (Configuration::get('NC_CAROUSEL_CUSTOM3') == "2") {
                   'nc_mobadots' => (Configuration::get('NC_MOBADOTSS')),
                   'pp_sticky' => (Configuration::get('RC_PP_STICKY')),
                   'pp_lay' => (Configuration::get('RC_PP_LAY')),
+                  'nc_pp_con' => (Configuration::get('NC_PP_CONS')),
+                  'nc_pp_i' => (Configuration::get('NC_PP_IS')),
                   'font_include' => $font_include);
 
         $this->context->smarty->assign('roythemes', $theme_settings);

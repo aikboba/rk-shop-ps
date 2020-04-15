@@ -125,6 +125,7 @@ $(document).ready(() => {
           header_trans();
           sticky();
       } else {
+          header_trans();
           if ($(this).scrollTop() == stickyfrom){
               $('#header').removeClass(sticky_classes);
           }
@@ -413,44 +414,55 @@ if($.trim(breadlast.html())=='') {
 }
 
 // tooltip
-var $uiEl = $('.tip_inside');
-$('body').append('<div id="ui_tip"><div class="ui_wrapper"><span class="ui_title"></span></div></div>');
-var $uiTip = $('#ui_tip');
-var $uiTipTitle = $uiTip.find('.ui_title');
 
-$uiEl.on('mousemove', function(e) {
-  $uiTip.css({
-    top: e.clientY,
-    left: e.clientX
+
+function uitiprun() {
+
+  var $uiEl = $('.tip_inside');
+  $('body').append('<div id="ui_tip"><div class="ui_wrapper"><span class="ui_title"></span></div></div>');
+  var $uiTip = $('#ui_tip');
+  var $uiTipTitle = $uiTip.find('.ui_title');
+
+  $uiEl.on('mousemove', function(e) {
+    $uiTip.css({
+      top: e.clientY,
+      left: e.clientX
+    });
+
+    var winwidth = $(window).width(),
+        tipwidth = $('#ui_tip').width(),
+        tiprightdot = e.clientX + tipwidth + 14 + 40; // plus 40 padding compensation
+
+    if (tiprightdot > winwidth) {
+      $('#ui_tip').addClass('align-right');
+    } else {
+      $('#ui_tip').removeClass('align-right');
+    }
   });
 
-  var winwidth = $(window).width(),
-      tipwidth = $('#ui_tip').width(),
-      tiprightdot = e.clientX + tipwidth + 14 + 40; // plus 40 padding compensation
-
-  if (tiprightdot > winwidth) {
-    $('#ui_tip').addClass('align-right');
-  } else {
-    $('#ui_tip').removeClass('align-right');
-  }
-});
-
-$uiEl.on('mouseover', function(e) {
-  $uiTipTitle.text($(this).find('.tip').text());
-  setTimeout(function() {
-    $uiTip.addClass('active')
-  }, 10);
-}).on('mouseout', function(e) {
-  $uiTip.removeClass('active');
-});
-
-$(window).scroll(function() {
-  $uiEl.hover(
-  function() {
-  },
-  function() {
-     $uiTip.removeClass('active');
+  $uiEl.on('mouseover', function(e) {
+    $uiTipTitle.text($(this).find('.tip').text());
+    setTimeout(function() {
+      $uiTip.addClass('active')
+    }, 10);
+  }).on('mouseout', function(e) {
+    setTimeout(function() {
+      $uiTip.removeClass('active');
+    }, 10);
   });
+
+  $(window).scroll(function() {
+    setTimeout(function() {
+      if($uiTip.hasClass('active')) {
+        $uiTip.removeClass('active');
+      }
+    }, 200);
+  });
+
+}
+
+$(document).ready(() => {
+  uitiprun();
 });
 
 

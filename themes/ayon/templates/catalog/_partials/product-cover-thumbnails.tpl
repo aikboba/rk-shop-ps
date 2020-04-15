@@ -22,7 +22,7 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
-<div class="images-container pp_lay{if isset($roythemes.pp_lay)}{$roythemes.pp_lay}{/if}">
+<div class="images-container pp_lay{if isset($roythemes.pp_lay)}{$roythemes.pp_lay}{/if} pp_thumbs{if isset($roythemes.pp_thumbs)}{$roythemes.pp_thumbs}{/if}">
 
   {block name='product_images'}
     <div class="js-qv-mask mask">

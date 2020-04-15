@@ -52,7 +52,7 @@
               disabled
             {/if}
           >
-            {l s='Add to cart' d='Shop.Theme.Actions'}
+          {if isset($roythemes.nc_pp_i) && $roythemes.nc_pp_i == "1"}<span class="plus">+</span><i></i>{/if}<span class="text">{l s='Add to cart' d='Shop.Theme.Actions'}</span>
           </button>
         </div>
       </div>

@@ -67,9 +67,11 @@
                 </ul>
               {/block}
 
+              <div class="product_image_wrapper">
               {block name='product_cover_thumbnails'}
                 {include file='catalog/_partials/product-cover-thumbnails.tpl'}
               {/block}
+              </div>
 
             {/block}
           </section>
@@ -86,6 +88,7 @@
             {block name='page_header_container'}
               {block name='page_header'}
                 <h1 class="h1 product-title" itemprop="name">{block name='page_title'}{$product.name}{/block}</h1>
+                  {hook h='displayProductNav' product=$product}
               {/block}
             {/block}
 
@@ -101,7 +104,7 @@
                     {/if}
                   {/section}
                   <meta itemprop="ratingValue" content="{$averageTotal}">
-                  <span class="nb-comments"><span itemprop="reviewCount">{l s='%s'|sprintf:$nbComments mod='productcomments'}</span> {if isset($nbComments) && $nbComments == 1}{l s='Review'}{else}{l s='Reviews'}{/if}</span>
+                  <a class="nb-comments noeffect goreviews" href="#tabsection"><span itemprop="reviewCount">{l s='%s'|sprintf:$nbComments mod='productcomments'}</span> {if isset($nbComments) && $nbComments == 1}{l s='Review'}{else}{l s='Reviews'}{/if}</a>
                 </div>
               </div>
             {/if}
@@ -112,9 +115,11 @@
                 {include file='catalog/_partials/product-discounts.tpl'}
               {/block}
 
+              {if isset($roythemes.nc_pp_con) && $roythemes.nc_pp_con == "1"}
               {block name='product_prices'}
                 {include file='catalog/_partials/product-prices.tpl'}
               {/block}
+              {/if}
 
               {block name='product_description_short'}
                 <div id="product-description-short-{$product.id}" сlass="product-short-desc" itemprop="description">{$product.description_short nofilter}</div>
@@ -126,6 +131,20 @@
                 {/block}
               {/if}
 
+
+                {if isset($roythemes.nc_pp_con) && $roythemes.nc_pp_con == "2"}
+                {block name='product_additional_info'}
+                  {include file='catalog/_partials/product-additional-info.tpl'}
+                {/block}
+                {/if}
+
+
+                {if isset($roythemes.nc_pp_con) && ($roythemes.nc_pp_con == "2" || $roythemes.nc_pp_con == "3")}
+                {block name='product_prices'}
+                  {include file='catalog/_partials/product-prices.tpl'}
+                {/block}
+                {/if}
+
               <div class="product-actions">
                 {block name='product_buy'}
                   <form action="{$urls.pages.cart}" method="post" id="add-to-cart-or-refresh">
@@ -136,6 +155,16 @@
                     {block name='product_variants'}
                       {include file='catalog/_partials/product-variants.tpl'}
                     {/block}
+
+                    {block name='product_add_to_cart'}
+                      {include file='catalog/_partials/product-add-to-cart.tpl'}
+                    {/block}
+
+                    {if isset($roythemes.nc_pp_con) && ($roythemes.nc_pp_con == "1" || $roythemes.nc_pp_con == "3")}
+                    {block name='product_additional_info'}
+                      {include file='catalog/_partials/product-additional-info.tpl'}
+                    {/block}
+                    {/if}
 
                     {block name='product_pack'}
                       {if $packItems}
@@ -150,8 +179,6 @@
                       {/if}
                     {/block}
 
-
-
                     {block name='product_out_of_stock'}
                       <div class="product-out-of-stock">
                         {hook h='actionProductOutOfStock' product=$product}
@@ -160,7 +187,7 @@
 
 					  {* Input to refresh product HTML removed, block kept for compatibility with themes *}
 					  {block name='product_refresh'}{/block}
-				  
+
                   </form>
                 {/block}
 
@@ -171,96 +198,94 @@
     </div>
 
 
-    {if $product.description}
-        {block name='product_tabs'}
-          <div class="tabs">
-            <div class="container">
-            <ul class="nav nav-tabs" role="tablist">
-              {if $product.description}
-                <li class="nav-item">
-                   <a
-                     class="nav-link{if $product.description} active{/if}"
-                     data-toggle="tab"
-                     href="#description"
-                     role="tab"
-                     aria-controls="description"
-                     {if $product.description} aria-selected="true"{/if}>{l s='Description' d='Shop.Theme.Catalog'}</a>
-                </li>
-              {/if}
-              {if $product.features}
-              <li class="nav-item">
-                <a
-                  class="nav-link{if !$product.description} active{/if}"
-                  data-toggle="tab"
-                  href="#product-details"
-                  role="tab"
-                  aria-controls="product-details"
-                  {if !$product.description} aria-selected="true"{/if}>{l s='Product Details' d='Shop.Theme.Catalog'}</a>
-              </li>
-              {/if}
-              {if $product.attachments}
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    data-toggle="tab"
-                    href="#attachments"
-                    role="tab"
-                    aria-controls="attachments">{l s='Attachments' d='Shop.Theme.Catalog'}</a>
-                </li>
-              {/if}
-              {foreach from=$product.extraContent item=extra key=extraKey}
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    data-toggle="tab"
-                    href="#extra-{$extraKey}"
-                    role="tab"
-                    aria-controls="extra-{$extraKey}">{$extra.title}</a>
-                </li>
-              {/foreach}
-            </ul>
+    {block name='product_tabs'}
+      <div class="tabs" id="tabsection">
+        <div class="container">
+        <ul class="nav nav-tabs" role="tablist">
+          {if $product.description}
+            <li class="nav-item">
+               <a
+                 class="nav-link{if $product.description} active{/if}"
+                 data-toggle="tab"
+                 href="#description"
+                 role="tab"
+                 aria-controls="description"
+                 {if $product.description} aria-selected="true"{/if}>{l s='Description' d='Shop.Theme.Catalog'}</a>
+            </li>
+          {/if}
+          {if $product.features}
+          <li class="nav-item">
+            <a
+              class="nav-link{if !$product.description} active{/if}"
+              data-toggle="tab"
+              href="#product-details"
+              role="tab"
+              aria-controls="product-details"
+              {if !$product.description} aria-selected="true"{/if}>{l s='Product Details' d='Shop.Theme.Catalog'}</a>
+          </li>
+          {/if}
+          {if $product.attachments}
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-toggle="tab"
+                href="#attachments"
+                role="tab"
+                aria-controls="attachments">{l s='Attachments' d='Shop.Theme.Catalog'}</a>
+            </li>
+          {/if}
+          {foreach from=$product.extraContent item=extra key=extraKey}
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-toggle="tab"
+                href="#extra-{$extraKey}"
+                role="tab"
+                aria-controls="extra-{$extraKey}">{$extra.title}</a>
+            </li>
+          {/foreach}
+        </ul>
 
-            <div class="tab-content" id="tab-content">
-             <div class="tab-pane fade in{if $product.description} active{/if}" id="description" role="tabpanel">
-               {block name='product_description'}
-                 <div class="product-description">{$product.description nofilter}</div>
-               {/block}
+        <div class="tab-content" id="tab-content">
+         <div class="tab-pane fade in{if $product.description} active{/if}" id="description" role="tabpanel">
+           {block name='product_description'}
+             <div class="product-description">{$product.description nofilter}</div>
+           {/block}
+         </div>
+
+         {block name='product_details'}
+           {include file='catalog/_partials/product-details.tpl'}
+         {/block}
+
+         {block name='product_attachments'}
+           {if $product.attachments}
+            <div class="tab-pane fade in" id="attachments" role="tabpanel">
+               <section class="product-attachments">
+                 <h3 class="h5 text-uppercase">{l s='Download' d='Shop.Theme.Actions'}</h3>
+                 {foreach from=$product.attachments item=attachment}
+                   <div class="attachment">
+                     <h4><a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">{$attachment.name}</a></h4>
+                     <p>{$attachment.description}</p
+                     <a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">
+                       {l s='Download' d='Shop.Theme.Actions'} ({$attachment.file_size_formatted})
+                     </a>
+                   </div>
+                 {/foreach}
+               </section>
              </div>
+           {/if}
+         {/block}
 
-             {block name='product_details'}
-               {include file='catalog/_partials/product-details.tpl'}
-             {/block}
+         {foreach from=$product.extraContent item=extra key=extraKey}
+         <div class="tab-pane fade in {$extra.attr.class}" id="extra-{$extraKey}" role="tabpanel" {foreach $extra.attr as $key => $val} {$key}="{$val}"{/foreach}>
+           {$extra.content nofilter}
+         </div>
+         {/foreach}
+      </div>
 
-             {block name='product_attachments'}
-               {if $product.attachments}
-                <div class="tab-pane fade in" id="attachments" role="tabpanel">
-                   <section class="product-attachments">
-                     <h3 class="h5 text-uppercase">{l s='Download' d='Shop.Theme.Actions'}</h3>
-                     {foreach from=$product.attachments item=attachment}
-                       <div class="attachment">
-                         <h4><a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">{$attachment.name}</a></h4>
-                         <p>{$attachment.description}</p
-                         <a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">
-                           {l s='Download' d='Shop.Theme.Actions'} ({$attachment.file_size_formatted})
-                         </a>
-                       </div>
-                     {/foreach}
-                   </section>
-                 </div>
-               {/if}
-             {/block}
-
-             {foreach from=$product.extraContent item=extra key=extraKey}
-             <div class="tab-pane fade in {$extra.attr.class}" id="extra-{$extraKey}" role="tabpanel" {foreach $extra.attr as $key => $val} {$key}="{$val}"{/foreach}>
-               {$extra.content nofilter}
-             </div>
-             {/foreach}
-          </div>
-
-          </div>
-        </div>
-      {/block}
-  {/if}
+      </div>
+    </div>
+  {/block}
 
 
     {block name='product_accessories'}
@@ -298,6 +323,75 @@
         {/block}
       </footer>
     {/block}
+
+
+        <!-- Root element of PhotoSwipe. Must have class pswp. -->
+        <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+            <!-- Background of PhotoSwipe.
+                 It's a separate element as animating opacity is faster than rgba(). -->
+            <div class="pswp__bg"></div>
+
+            <!-- Slides wrapper with overflow:hidden. -->
+            <div class="pswp__scroll-wrap">
+
+                <!-- Container that holds slides.
+                    PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                    Don't modify these 3 pswp__item elements, data is added later on. -->
+                <div class="pswp__container">
+                    <div class="pswp__item"></div>
+                    <div class="pswp__item"></div>
+                    <div class="pswp__item"></div>
+                </div>
+
+                <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+                <div class="pswp__ui pswp__ui--hidden">
+
+                    <div class="pswp__top-bar">
+
+                        <!--  Controls are self-explanatory. Order can be changed. -->
+
+                        <div class="pswp__counter"></div>
+
+                        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                        <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                        <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                        <!-- element will get class pswp__preloader--active when preloader is running -->
+                        <div class="pswp__preloader">
+                            <div class="pswp__preloader__icn">
+                              <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                        <div class="pswp__share-tooltip"></div>
+                    </div>
+
+                    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                    </button>
+
+                    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                    </button>
+
+                    <div class="pswp__caption">
+                        <div class="pswp__caption__center"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
   </section>
 
 {/block}

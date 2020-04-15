@@ -154,9 +154,7 @@
         <div class="prod-short-desc" itemprop="description">{$product.description_short nofilter}</div>
         {block name='product_price_and_shipping'}
           {if $product.show_price}
-            <div class="product-price-and-shipping" itemprop="offers"
-                 itemscope
-                 itemtype="https://schema.org/Offer">
+            <div class="product-price-and-shipping">
                 <link itemprop="availability" href="https://schema.org/InStock"/>
                 <meta itemprop="priceCurrency" content="{$currency.iso_code}">
                 <meta itemprop="url" content="{$product.url}">
@@ -171,7 +169,7 @@
               {hook h='displayProductPriceBlock' product=$product type="before_price"}
 
               <span class="sr-only">{l s='Price' d='Shop.Theme.Catalog'}</span>
-              <span itemprop="price" class="price">{$product.price|replace:',00':''}</span>
+              <span itemprop="price" class="price">{$product.price}</span>
 
               {hook h='displayProductPriceBlock' product=$product type='unit_price'}
 

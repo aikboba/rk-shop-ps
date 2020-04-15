@@ -44,7 +44,7 @@
           </div>
         {/if}
         <div class="current-price">
-          <span itemprop="price" content="{$product.price_amount}">{$product.price|replace:',00':''}</span>
+          <span itemprop="price" content="{$product.price_amount}">{$product.price}</span>
         </div>
         {if $product.has_discount}
           {if $product.discount_type === 'percentage'}

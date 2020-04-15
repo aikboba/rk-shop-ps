@@ -22,12 +22,19 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
-<section id="content" class="page-not-found">
+<section id="content" class="page-content page-not-found">
   {block name='page_content'}
     <span class="title404">404</span>
     <h4>{l s='Page you are looking for does not exist' d='Shop.Theme.Global'}</h4>
-    <p>
-      Вернитесь на главную страницу или обратитесь в <a href="https://www.instagram.com/rimmakaramova.support/" target="_blank" class="underline-simple">техподдержку (@rimmakaramova.support)</a>
-    </p>
+    <p>{l s='Try it out again:' d='Shop.Theme.Global'}</p>
+
+    {block name='search'}
+      {hook h='displaySearch'}
+    {/block}
+
+    {block name='hook_not_found'}
+      {hook h='displayNotFound'}
+    {/block}
+
   {/block}
 </section>

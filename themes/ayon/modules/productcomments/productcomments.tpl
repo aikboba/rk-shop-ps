@@ -40,7 +40,7 @@
 
 <div id="productCommentsBlock">
     <div class="tabs-pc">
-        <div class="clearfix">
+        <div class="clearfix newcom">
             {if ($too_early == false AND ($logged OR $allow_guests))}
                 <a class="open-comment-form btn btn-primary" href="#new_comment_form">{l s='Write your review' mod='productcomments'}</a>
             {/if}
@@ -111,7 +111,7 @@
         <div style="display:none">
             <div id="new_comment_form">
                 <form id="id_new_comment_form" action="#">
-                    <h2 class="title">{l s='Write your review' mod='productcomments'}</h2>                    
+                    <h2 class="title">{l s='Write your review' mod='productcomments'}</h2>
                     <div class="new_comment_form_content">
                         <div id="new_comment_form_error" class="error" style="display:none;padding:15px 25px">
                             <ul></ul>

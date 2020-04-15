@@ -91,7 +91,7 @@
           <div class="product-line-grid-price">
                   <div class="product-line-info product-price h5 {if $product.has_discount}has-discount{/if}">
                   <div class="current-price">
-                    <span class="price">{$product.price|replace:',00':''}</span>
+                    <span class="price">{$product.price}</span>
                     {if $product.has_discount}
                       <span class="regular-price old-price">{$product.regular_price}</span>
                       {if $product.discount_type === 'percentage'}
@@ -134,7 +134,7 @@
                   {if isset($product.is_gift) && $product.is_gift}
                     <span class="gift">{l s='Gift' d='Shop.Theme.Checkout'}</span>
                   {else}
-                    {$product.total|replace:',00':''}
+                    {$product.total}
                   {/if}
               </span>
             </div>

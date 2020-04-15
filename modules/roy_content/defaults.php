@@ -1,44 +1,47 @@
 <?php
 
-$t1 = null;
-$result &= $this->installFixture('1','footerbefore', $t1, '3', '
-<h2 style="text-align:center"><a href="#" class="underline">Our Instagram .</a></h2>
-', $this->context->shop->id, $language['id_lang']);
-$t2 = null;
-$result &= $this->installFixture('2','footerbefore', $t2, '3', '
-<h2 style="text-align:center"><a href="#" class="underline">Top Sellers .</a></h2>
-', $this->context->shop->id, $language['id_lang']);
-$t3 = null;
-$result &= $this->installFixture('3','footerbefore', $t3, '3', '
-<h2 style="text-align:center"><a href="#" class="underline">Featured Collection .</a></h2>
-', $this->context->shop->id, $language['id_lang']);
-$t4 = null;
-$result &= $this->installFixture('4','footerbefore', $t4, '3', '
-<h2 style="text-align:center"><a href="#" class="underline">Contact .</a></h2>
-', $this->context->shop->id, $language['id_lang']);
-$t5 = null;
-$result &= $this->installFixture('5','footerbefore', $t5, '12', '
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-', $this->context->shop->id, $language['id_lang']);
-
 $b1 = 1;
-$result &= $this->installFixture('6','footerbefore', $b1, '12', 'Custom HTML goes here', $this->context->shop->id, $language['id_lang']);
-
-$t6 = null;
-$result &= $this->installFixture('7','footerbefore', $t6, '12', '
+$result &= $this->installFixture('1','top', $b1, '4', 'Custom HTML goes here', $this->context->shop->id, $language['id_lang']);
+$text1 = null;
+$result &= $this->installFixture('2','top', $text1, '8', '
+<div style="text-align:right">
+<h2 style="font-size:110px; line-height:100px;">Claire Fonzo</h2>
 <p>&nbsp;</p>
+<p style="font-size:26px">Lets meet, I founded my little factory at 24,<br />
+here in my beloved Paris. A unique style<br />
+according to our patterns.
 <p>&nbsp;</p>
-</p>
-<h5 style="text-align:center">Our little fabric located in Amsterdam.<br />
-We a glad to make you feel comfort and amazing quality of handmade bags and backpacks.</h5>
+<p style="font-size:26px">Ignoring trends, we will create our own.<br />
+Top quality and no limits. Join now.</p>
+</div>
 ', $this->context->shop->id, $language['id_lang']);
+
+
+$space1 = null;
+$result &= $this->installFixture('3','top', $space1, '12', '
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+', $this->context->shop->id, $language['id_lang']);
+
+
+$text2 = null;
+$result &= $this->installFixture('4','top', $text2, '6', '
+<h2 style="font-size:110px; line-height:100px;">My<br />
+Colors</h2>
+<p>&nbsp;</p>
+<p style="font-size:26px">Create own rules for unlimited style freedom.<br />
+Unique color schemes. Extra fashion.</p>
+', $this->context->shop->id, $language['id_lang']);
+$b2 = 2;
+$result &= $this->installFixture('5','top', $b2, '6', 'Custom HTML goes here', $this->context->shop->id, $language['id_lang']);
+
+
 
 $footer = null;
 $result &= $this->installFixture('1','footer', $footer, '12', '
-Copyright 2019 © RoyThemes. South city, Sunny st. 22, 2nd floor, first door.<br />
-Phone: +0 123 456 78. Store Working Time: 10.00 - 22.00
+Copyright 2019 © RoyThemes.<br />
+Phone: +0 123 456 78 - Mail: <a href="ayon@roythemes.com">ayon@roythemes.com</a>
 ', $this->context->shop->id, $language['id_lang']);
-
 
 ?>

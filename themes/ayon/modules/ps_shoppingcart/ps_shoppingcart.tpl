@@ -43,8 +43,8 @@
           <div class="cart-total">
             {foreach from=$cart.subtotals item="subtotal"}
             <div class="cart-summary-line">
-              <span class="label">{$subtotal.label}: </span>
-              <span class="value">{$subtotal.value|replace:',00':''}</span>
+              <span class="label">{$subtotal.label}</span>
+              <span class="value">{$subtotal.value}</span>
             </div>
             {/foreach}
           </div>
