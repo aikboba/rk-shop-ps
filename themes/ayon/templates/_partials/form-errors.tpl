@@ -23,6 +23,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 {if $errors|count}
+
   <div class="help-block">
     {block name='form_errors'}
       <ul>
@@ -32,4 +33,5 @@
       </ul>
     {/block}
   </div>
+    
 {/if}
