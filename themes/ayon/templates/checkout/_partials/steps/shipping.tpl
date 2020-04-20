@@ -37,6 +37,7 @@
         data-url-update="{url entity='order' params=['ajax' => 1, 'action' => 'selectDeliveryOption']}"
         method="post"
       >
+
           <h4>Чтобы предупредить распространение COVID-19, мы рекомендуем:</h4>
           <h6>• выбрать услугу «Бесконтактная доставка». Наш курьер доставит посылку до двери и убедится, что она у получателя с безопасного расстояния;</h6>
           <h6>• оплачивать только банковской картой. Это увеличит скорость оплаты и минимизирует контакт с сотрудниками ПВЗ и другими клиентами в помещении;</h6>
@@ -48,8 +49,7 @@
               </a> во вкладке «Адреса офисов» или в <a href="https://cdek.ru/storage/%D0%BA%D0%B0%D1%80%D0%B0%D0%BD%D1%82%D0%B8%D0%BD%20%202.04.2020-2%20%282%29.xlsx">
                   {l s='Файл Exel' d='Shop.Theme.Customeraccount'}
               </a> .</h5><br>
-
-          <div class="form-fields">
+        <div class="form-fields">
           {block name='delivery_options'}
             <div class="delivery-options">
               {foreach from=$delivery_options item=carrier key=carrier_id}

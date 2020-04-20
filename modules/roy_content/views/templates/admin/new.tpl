@@ -104,11 +104,20 @@
 						</div>
 					</div>
 				</div>
+				<div class="hide_desktop item-field form-group">
+					<div class="col-lg-9 col-lg-offset-3">
+						<div class="checkbox">
+							<label class="control-label">
+								{l s='Hide banner on desktops' d='Modules.RoyBanners.Shop'}
+								<input type="checkbox" name="item_hides" value="1" />
+							</label>
+						</div>
+					</div>
+				</div>
 				<div class="hook item-field form-group">
 					<label class="control-label col-lg-3">{l s='Hook' d='Modules.RoyBanners.Shop'}</label>
 					<div class="col-lg-7">
 						<select class="form-control fixed-width-lg" name="item_hook" default="top">
-							<option value="toppanel">top panel</option>
 							<option value="top">top</option>
               <option value="home">home</option>
               <option value="footerbefore">before footer</option>

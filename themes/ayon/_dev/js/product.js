@@ -25,17 +25,20 @@
 import $ from 'jquery';
 import prestashop from 'prestashop';
 import { flickity } from "../node_modules/flickity/dist/flickity.pkgd.min";
+import * as PhotoSwipe from 'photoswipe';
+import * as PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default';
 
 $(document).ready(function () {
   createProductSpin();
   createInputFile();
   coverImage();
   thumbsInit();
+  ppzoom();
   whiteborder();
   shareclick();
 
   prestashop.on('updatedProduct', function (event) {
-    thumbsDestroy();
+
     createProductSpin()
     createInputFile();
     coverImage();
@@ -54,14 +57,48 @@ $(document).ready(function () {
     shareclick();
     slideqv();
 
+    var $uiEl = $('.tip_inside');
+    $('body').append('<div id="ui_tip"><div class="ui_wrapper"><span class="ui_title"></span></div></div>');
+    var $uiTip = $('#ui_tip');
+    var $uiTipTitle = $uiTip.find('.ui_title');
+
+    $uiEl.on('mousemove', function(e) {
+      $uiTip.css({
+        top: e.clientY,
+        left: e.clientX
+      });
+
+      var winwidth = $(window).width(),
+          tipwidth = $('#ui_tip').width(),
+          tiprightdot = e.clientX + tipwidth + 14 + 40; // plus 40 padding compensation
+
+      if (tiprightdot > winwidth) {
+        $('#ui_tip').addClass('align-right');
+      } else {
+        $('#ui_tip').removeClass('align-right');
+      }
+    });
+
+    $uiEl.on('mouseover', function(e) {
+      $uiTipTitle.text($(this).find('.tip').text());
+      setTimeout(function() {
+        $uiTip.addClass('active')
+      }, 10);
+    }).on('mouseout', function(e) {
+      setTimeout(function() {
+        $uiTip.removeClass('active');
+      }, 10);
+    });
+
     setTimeout( function(){
       thumbsInit();
+      ppzoom();
     },200);
 
   });
-  function thumbsDestroy() {
-  }
+
   function thumbsInit() {
+
     var thumbs_count_lis = $('#main .product-thumbs-wrapper li.thumb-container');
 
     if (thumbs_count_lis.length == 1) {
@@ -77,6 +114,7 @@ $(document).ready(function () {
     setTimeout( function(){
 
     initslidepp();
+    $('.product-thumbs-wrapper').addClass('thumbs_go');
 
       $(window).on('load resize', function(){
         initslidepp();
@@ -89,7 +127,6 @@ $(document).ready(function () {
           cellAlign: 'left',
           contain: true,
           imagesLoaded: true,
-          wrapAround: true,
           arrowShape: {
             x0: 30,
             x1: 60, y1: 50,
@@ -106,8 +143,8 @@ $(document).ready(function () {
           imagesLoaded: true,
           contain: true
         });
-      }
 
+      }
       function initslidepp() {
         if (window.matchMedia('(max-width: 767px)').matches) { // slide it for mobile for all lays
             slidepp();
@@ -120,11 +157,71 @@ $(document).ready(function () {
             $('.images-container .product-thumbs').flickity('destroy');
         }
       }
-
     },100);
+
 
   }
 
+  function ppzoom() {
+    if ($('.images-container').hasClass('pp_lay1')) {
+      $('.images-container .product-images').on( 'staticClick.flickity', function( event, pointer, cellElement, cellIndex ) {
+        // Photoswipe functions
+        var openPhotoSwipe = function() {
+          var pswpElement = document.querySelectorAll('.pswp')[0];
+
+          // build items array
+          var items = $.map($('.images-container .product-images').find("img"), function(el) {
+            return {
+              "src": el.getAttribute('src'),
+              "w":   el.width,
+              "h":   el.height
+            }
+          });
+
+          var options = {
+            history: false,
+            shareEl: false,
+            index: cellIndex
+          };
+
+          var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+          gallery.init();
+
+        };
+
+        openPhotoSwipe();
+      });
+
+    } else {
+
+        $('.images-container .product-images li img').click(function(event) {
+
+
+            // build items array
+            var items = $.map($('.images-container.pp_lay2 .product-images').find("img"), function(el) {
+              return {
+                "src": el.getAttribute('src'),
+                "w":   el.width,
+                "h":   el.height
+              }
+            });
+
+            // Define object and gallery options
+            var $pswp = $('.pswp')[0],
+              options = {
+                index: $(this).parent('.thumb-container').index(),
+                bgOpacity: 0.85,
+                showHideOpacity: true
+              };
+
+            var gallery = new PhotoSwipe( $pswp, PhotoSwipeUI_Default, items, options);
+            gallery.init();
+
+        });
+
+    }
+
+  }
 
   function slideqv() {
     $('.quickview .product-images').flickity({
@@ -188,6 +285,24 @@ $(document).ready(function () {
     });
   }
 
+  // reviews click
+  $('.goreviews').click(function(e) {
+    e.preventDefault;
+    var reviewstab = $('#productCommentsBlock').parent();
+    var reviewstabid = reviewstab.attr('id');
+    var reviewstablink = $('a[href="#' + reviewstabid + '"]');
+
+    $("body,html").animate( {
+      scrollTop: $("#tabsection").offset().top - 170
+    }, 600 );
+    setTimeout( function() {
+      reviewstablink.click();
+    }, 200 );
+
+
+  });
+
+
   // white color
   function whiteborder()
   {
@@ -199,7 +314,6 @@ $(document).ready(function () {
   }
 
   // share
-
   function shareclick() {
     $('.share_text').click(function(e) {
       e.preventDefault;

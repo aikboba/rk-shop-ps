@@ -17,12 +17,10 @@
             </a>
           {/if}
 
-            {if false}
           <a id="identity-link" href="{$urls.pages.identity}">
               <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28"><path d="M16.26,15.7A4,4,0,0,0,14,15H7a4,4,0,0,0-4,4v2l1,2h7" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"/><circle cx="10.5" cy="7" r="4" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"/><polygon points="22.96 14.85 26.15 18.04 18.18 26 15 26 15 22.82 22.96 14.85" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px"/></svg></i>
               {l s='Information' d='Shop.Theme.Customeraccount'}
           </a>
-            {/if}
 
           {if $customer.addresses|count}
             <a id="addresses-link" href="{$urls.pages.addresses}">

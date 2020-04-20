@@ -34,7 +34,8 @@
     <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line class="st0" x1="4" y1="18" x2="14" y2="18"/><line class="st0" x1="4" y1="12" x2="20" y2="12"/><line class="st0" x1="4" y1="6" x2="10" y2="6"/></svg></i>
   </button>
   <div class="dropdown-menu">
-    {foreach from=$listing.sort_orders item=sort_order}
+      {foreach from=$listing.sort_orders item=sort_order}
+          {if $sort_order.label != 'Релевантность'}
       <a
         rel="nofollow"
         href="{$sort_order.url}"
@@ -42,6 +43,7 @@
       >
         {$sort_order.label}
       </a>
+      {/if}
     {/foreach}
   </div>
 </div>

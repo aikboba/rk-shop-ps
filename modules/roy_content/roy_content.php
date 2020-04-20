@@ -73,7 +73,6 @@ class Roy_Content extends Module
 			|| !$this->installDB()
 			|| !$this->installFixtures(Language::getLanguages(true)) ||
 			!$this->registerHook('displayHeader') ||
-			!$this->registerHook('displayHeaderContent') ||
 			!$this->registerHook('displayTopColumn') ||
 		  !$this->registerHook('displayHome') ||
 			!$this->registerHook('displayFooterBefore') ||
@@ -111,6 +110,7 @@ class Roy_Content extends Module
 					`hover_type` tinyint(1) unsigned NOT NULL DEFAULT \'1\',
 					`fit` tinyint(1) unsigned NOT NULL DEFAULT \'0\',
 					`hide` tinyint(1) unsigned NOT NULL DEFAULT \'0\',
+					`hides` tinyint(1) unsigned NOT NULL DEFAULT \'0\',
 					`cols` VARCHAR(2),
 					`banner_layout` tinyint(1) unsigned NOT NULL DEFAULT \'0\',
 					`height_rows` tinyint(1) unsigned NOT NULL DEFAULT \'0\',
@@ -136,13 +136,14 @@ class Roy_Content extends Module
 		);
 	}
 
-	protected function installFixture($item_order, $hook, $id_image, $cols, $html, $id_shop, $id_lang)
+	protected function installFixture($hook, $id_image, $cols, $html, $id_shop, $id_lang)
 	{
 		$result = true;
 
 		$ext = '';
 		$width = 0;
 		$height = 0;
+		$imagevalue = '';
 		$imagefact = '';
 
 		if ($id_image) {
@@ -153,20 +154,22 @@ class Roy_Content extends Module
 			$width = (isset($sizes[0]) && $sizes[0])? (int)$sizes[0] : 0;
 			$height = (isset($sizes[1]) && $sizes[1])? (int)$sizes[1] : 0;
 
+			$imagevalue = (int)$id_image;
 			$imagefact = 'banner-img'.(int)$id_image.'.'.$ext.'';
 		}
 
 		$result &= Db::getInstance()->Execute('
 			INSERT INTO `'._DB_PREFIX_.'roy_content` (
-					`id_shop`, `id_lang`, `item_order`, `title`, `title_use`, `hook`, `url`, `target`, `video`, `hover`, `hover_type`, `fit`, `hide`, `cols`, `banner_layout`, `height_rows`, `bg_color`, `grad_start`, `grad_end`, `title_color`, `desc_color`, `button_type`, `button_bg`, `button_color`, `button_border`, `button_bgh`, `button_colorh`, `button_borderh`, `image`, `image_w`, `image_h`, `html`, `active`
+					`id_shop`, `id_lang`, `item_order`, `title`, `title_use`, `hook`, `url`, `target`, `video`, `hover`, `hover_type`, `fit`, `hide`, `hides`, `cols`, `banner_layout`, `height_rows`, `bg_color`, `grad_start`, `grad_end`, `title_color`, `desc_color`, `button_type`, `button_bg`, `button_color`, `button_border`, `button_bgh`, `button_colorh`, `button_borderh`, `image`, `image_w`, `image_h`, `html`, `active`
 			) VALUES (
 				\''.(int)$id_shop.'\',
 				\''.(int)$id_lang.'\',
-				'.$item_order.',
+				\''.$imagevalue.'\',
 				\'Title of Banner\',
 				\'0\',
 				\''.pSQL($hook).'\',
 				\'#\',
+				\'0\',
 				\'0\',
 				\'0\',
 				\'0\',
@@ -254,15 +257,6 @@ class Roy_Content extends Module
 	public function hookdisplayTopColumn()
 	{
 		return $this->hookdisplayTop();
-	}
-
-	public function hookdisplayHeaderContent()
-	{
-		$this->context->smarty->assign(array(
-			'htmlitems' => $this->getItemsFromHook('toppanel'),
-			'hook' => 'toppanel'
-		));
-		return $this->display(__FILE__, 'hook.tpl');
 	}
 
 	public function hookdisplayTop()
@@ -426,6 +420,7 @@ class Roy_Content extends Module
 					hover_type = '.(int)Tools::getValue('item_hover_type').',
 					fit = '.(int)Tools::getValue('item_fit').',
 					hide = '.(int)Tools::getValue('item_hide').',
+					hides = '.(int)Tools::getValue('item_hides').',
 					cols = \''.pSQL(Tools::getValue('item_cols')).'\',
 					banner_layout = \'0\',
 					height_rows = \'0\',
@@ -537,7 +532,7 @@ class Roy_Content extends Module
 
 		if (!Db::getInstance()->Execute('
 			INSERT INTO `'._DB_PREFIX_.'roy_content` (
-					`id_shop`, `id_lang`, `item_order`, `title`, `title_use`, `hook`, `url`, `target`, `video`, `hover`, `hover_type`, `fit`, `hide`, `cols`, `banner_layout`, `height_rows`, `bg_color`, `grad_start`, `grad_end`, `title_color`, `desc_color`, `button_type`, `button_bg`, `button_color`, `button_border`, `button_bgh`, `button_colorh`, `button_borderh`, `image`, `image_w`, `image_h`, `html`, `active`
+					`id_shop`, `id_lang`, `item_order`, `title`, `title_use`, `hook`, `url`, `target`, `video`, `hover`, `hover_type`, `fit`, `hide`, `hides`, `cols`, `banner_layout`, `height_rows`, `bg_color`, `grad_start`, `grad_end`, `title_color`, `desc_color`, `button_type`, `button_bg`, `button_color`, `button_border`, `button_bgh`, `button_colorh`, `button_borderh`, `image`, `image_w`, `image_h`, `html`, `active`
 			) VALUES (
 					\''.(int)$this->context->shop->id.'\',
 					\''.(int)Tools::getValue('id_lang').'\',
@@ -552,6 +547,7 @@ class Roy_Content extends Module
 					\''.(int)Tools::getValue('item_hover_type').'\',
 					\''.(int)Tools::getValue('item_fit').'\',
 					\''.(int)Tools::getValue('item_hide').'\',
+					\''.(int)Tools::getValue('item_hides').'\',
 					\''.pSQL(Tools::getValue('item_cols')).'\',
 					\'0\',
 					\'0\',
@@ -610,7 +606,6 @@ class Roy_Content extends Module
 		foreach ($this->languages as $language)
 		{
 			$hooks[$language['id_lang']] = array(
-				'toppanel',
 				'top',
 				'home',
 				'footerbefore',

@@ -25,8 +25,7 @@
 <section id="js-checkout-summary" class="card js-cart cart-summary" data-refresh-url="{$urls.pages.cart}?ajax=1&action=refresh">
   <div class="cart-detailed-totals">
 
-  {if false}
-  <h4>Количество - {$cart.summary_string}</h4>
+  <h4>{l s='Subtotal' d='Shop.Theme.Checkout'} - {$cart.summary_string}</h4>
 
   {block name='cart_summary_products'}
     <div class="cart-summary-products">
@@ -57,7 +56,7 @@
         {if $subtotal && $subtotal.type !== 'tax'}
           <div class="cart-summary-line cart-summary-subtotals" id="cart-subtotal-{$subtotal.type}">
             <span class="label">{$subtotal.label}</span>
-            <span class="value">{$subtotal.value|replace:',00':''}</span>
+            <span class="value">{$subtotal.value}</span>
           </div>
         {/if}
       {/foreach}
@@ -70,7 +69,6 @@
   {/block}
 
   <hr class="separator">
-  {/if}
 
   {block name='cart_summary_totals'}
     {include file='checkout/_partials/cart-summary-totals.tpl' cart=$cart}

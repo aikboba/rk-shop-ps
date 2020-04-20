@@ -37,7 +37,7 @@
               {$subtotal.label}
             {/if}
           </span>
-          <span class="value">{$subtotal.value|replace:',00':''}</span>
+          <span class="value">{$subtotal.value}</span>
           {if $subtotal.type === 'shipping'}
               <div><small class="value">{hook h='displayCheckoutSubtotalDetails' subtotal=$subtotal}</small></div>
           {/if}
@@ -54,15 +54,14 @@
 
   <div class="card-block">
     <div class="cart-summary-line cart-total">
-      <span class="label">{$cart.totals.total.label} <span>{$cart.labels.tax_short}:</span></span>
-      <span class="value">{$cart.totals.total.value|replace:',00':''}</span>
+      <span class="label">{$cart.totals.total.label} <span>{$cart.labels.tax_short}</span></span>
+      <span class="value">{$cart.totals.total.value}</span>
     </div>
-    {if $cart.subtotals.tax.value}
-      <div class="cart-summary-line">
-        <small class="label">{$cart.subtotals.tax.label}</small>
-        <small class="value">{$cart.subtotals.tax.value|replace:',00':''}</small>
-      </div>
-    {/if}
+
+    <div class="cart-summary-line">
+      <small class="label">{$cart.subtotals.tax.label}</small>
+      <small class="value">{$cart.subtotals.tax.value}</small>
+    </div>
   </div>
 
   <hr class="separator">

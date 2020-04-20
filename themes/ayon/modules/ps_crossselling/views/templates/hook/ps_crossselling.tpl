@@ -1,4 +1,4 @@
-<section class="featured-products slider-on clearfix mt-3">
+<section class="featured-products slider-on slideme clearfix mt-3">
   <div class="pp_products_wrapper">
     <h2 class="products-section-title">{l s='Customers who bought this product also bought:' d='Shop.Theme.Catalog'}</h2>
     <div class="products">

@@ -130,8 +130,8 @@
   height: 20px;
 }
 .col-content-inside .comments_note .star_content .nb-comments {
-  margin-left:10px;
-  margin-top: 4px;
+  margin-left:14px;
+  margin-top: 2px;
   font-size: 13px;
   line-height: 13px;
 }
@@ -175,7 +175,7 @@
 #product_comments_block_tab div.comment {
     margin: 0 0 32px 0;
     padding: 10px 0 32px;
-    border-bottom: 2px dotted #ccc
+    border-bottom: 2px dotted;
 }
 
 #product_comments_block_tab div.comment div.comment_author {
@@ -288,8 +288,13 @@
 
 .fr { float: right; }
 
-.open-comment-form {
-    margin-bottom: 20px;
+#productCommentsBlock .newcom {
+  text-align: center;
+}
+#productCommentsBlock .open-comment-form.btn {
+    margin:0 auto 20px;
+    padding-left: 70px;
+    padding-right: 70px;
 }
 
 #newCommentForm {

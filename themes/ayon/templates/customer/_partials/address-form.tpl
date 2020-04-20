@@ -39,7 +39,6 @@
         <section class="form-fields">
           {block name='form_fields'}
             {foreach from=$formFields item="field"}
-              {if $field.name=='company' || $field.name=='vat_number' || $field.name=='address2'}{continue}{/if}
               {block name='form_field'}
                 {form_field field=$field}
               {/block}

@@ -96,7 +96,6 @@
             <label> {l s='Я понимаю, что в связи с введением пропускного режима, возврат товара невозможен' d='Shop.Theme.Customeraccount'}</label>
           </span>
           {/block}
-
       {elseif $field.type === 'date'}
 
         {block name='form_field_item_date'}

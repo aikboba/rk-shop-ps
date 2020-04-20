@@ -78,7 +78,7 @@
 
         {if $use_same_address && !$cart.is_virtual}
           <p>
-            <a data-link-action="different-invoice-address" href="{$use_different_address_url}" class="underline-simple">
+            <a data-link-action="different-invoice-address" href="{$use_different_address_url}">
               {l s='Billing address differs from shipping address' d='Shop.Theme.Checkout'}
             </a>
           </p>

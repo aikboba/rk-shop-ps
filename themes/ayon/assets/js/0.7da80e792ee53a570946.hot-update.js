@@ -1257,7 +1257,6 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(document).ready(function () {
           pageDots: false,
           cellAlign: 'left',
           contain: true,
-          wrapAround: true,
           arrowShape: {
             x0: 30,
             x1: 60, y1: 50,

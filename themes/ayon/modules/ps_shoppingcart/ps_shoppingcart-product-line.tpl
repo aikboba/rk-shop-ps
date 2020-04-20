@@ -22,5 +22,5 @@
   {foreach from=$product.attributes item="property_value" key="property"}
     <span>{$property}: {$property_value}</span>
   {/foreach}</p>
-	<span class="product-price">{$product.price|replace:',00':''}</span>
+	<span class="product-price">{$product.price}</span>
 </div>

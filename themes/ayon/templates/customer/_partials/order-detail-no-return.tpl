@@ -95,7 +95,7 @@
               {$product.quantity}
             {/if}
           </td>
-          <td class="text-xs-right">{$product.price|replace:',00':''}</td>
+          <td class="text-xs-right">{$product.price}</td>
           <td class="text-xs-right">{$product.total}</td>
         </tr>
       {/foreach}
@@ -138,7 +138,7 @@
           <div class="col-sm-7 qty">
             <div class="row">
               <div class="col-xs-4 text-sm-left text-xs-left">
-                {$product.price|replace:',00':''}
+                {$product.price}
               </div>
               <div class="col-xs-4">
                 {if $product.customizations}
