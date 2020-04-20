@@ -1578,10 +1578,12 @@ body#index #main { background: none; }body#index #main { padding-top:80px; paddi
 a:link {
   text-decoration: underline;
 }
-.side_menu #side_acc_wrap .menu_selectors, .side_menu #side_menu_wrap .menu_selectors {
 
+#main .product-info label {
+    font-size: 14px;
     display: none;
 }
- i.box-search{
-     display: none;
- }
+
+.side_menu #side_menu_wrap .menu_selectors {
+  	display: none;
+}
