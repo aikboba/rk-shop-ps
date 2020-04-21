@@ -93,7 +93,7 @@
               <span class="custom-checkbox">
             <input name="{$field.name}" type="checkbox" value="1" {if $field.value}checked="checked"{/if} {if $field.required}required{/if}>
             <span><i class="material-icons rtl-no-flip checkbox-checked">&#xE5CA;</i></span>
-            <label> {l s='Я понимаю, что в связи с введением пропускного режима, возврат товара невозможен' d='Shop.Theme.Customeraccount'}</label>
+            <label> {l s='Я понимаю, что в связи с введением пропускного режима, возврат товара невозможен.' d='Shop.Theme.Customeraccount'}</label>
           </span>
           {/block}
       {elseif $field.type === 'date'}

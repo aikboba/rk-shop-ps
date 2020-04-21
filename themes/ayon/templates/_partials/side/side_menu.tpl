@@ -8,8 +8,7 @@
 <div class="menu_mob_wrapper"><br>
   <h4 class="menu_mob_wrapper"><a class="menu_acc" href="https://rimmakaramova-shop.ru/3-zhenskie-modeli">{l s='Женские модели' d='Shop.Theme.Customeraccount'}</a></h4><br>
   <h4 class="menu_mob_wrapper"><a class="menu_acc" href="https://rimmakaramova-shop.ru/9-detskie-modeli">{l s='Детские модели' d='Shop.Theme.Customeraccount'}</a></h4><br>
-  <h4 class="menu_mob_wrapper"><a class="menu_acc" href="https://rimmakaramova-shop.ru/10-muzhskie-modeli">{l s='Мужские модели' d='Shop.Theme.Customeraccount'}</a></h4><br>
-  {hook h='displayMegaMenu'}
+ {hook h='displayMegaMenu'}
 </div>
 
 {hook h="displaySideMobileMenu"}
