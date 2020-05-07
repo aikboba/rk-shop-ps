@@ -1590,3 +1590,8 @@ i.box-search {
     display: none;
 }
 
+#index #main h2.products-section-title, .products-section-title {
+
+    display: none;
+}
+
